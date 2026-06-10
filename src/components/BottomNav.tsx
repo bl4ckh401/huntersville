@@ -13,7 +13,7 @@ export default function BottomNav() {
   ];
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-xl border-t border-outline-variant/30 pb-6 shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
+    <nav className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-xl border-t border-outline-variant/30 pb-[env(safe-area-inset-bottom)] shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
       <div className="flex justify-around items-center relative h-16 px-2 mt-1">
         {links.map(({ href, label, icon, activeOn }) => {
           const isActive = activeOn.includes(pathname) || (href !== '/' && pathname.startsWith(href));

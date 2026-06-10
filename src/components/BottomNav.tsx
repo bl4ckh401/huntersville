@@ -7,9 +7,9 @@ export default function BottomNav() {
   const pathname = usePathname();
 
   const links = [
-    { href: '/explore', label: 'Explore', icon: 'search', activeOn: ['/', '/explore'] },
+    { href: '/explore', label: 'Explore', icon: 'search', activeOn: ['/explore'] },
     { href: '/about', label: 'About', icon: 'tour', activeOn: ['/about'] },
-    { href: '/profile', label: 'Profile', icon: 'person', activeOn: ['/profile'] },
+    { href: '/login', label: 'Login', icon: 'login', activeOn: ['/login', '/profile'] },
   ];
 
   return (

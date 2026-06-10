@@ -35,9 +35,9 @@ export default function Navbar() {
           <button className="md:hidden text-on-surface-variant p-2 rounded-full hover:bg-surface-container-low transition-colors">
             <span className="material-symbols-outlined">search</span>
           </button>
-          <button className="bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded-full hover:shadow-md hover:scale-101 active:scale-95 transition-all shadow-[0_2px_0_rgba(0,0,0,0.1)]">
+          <Link href="/login" className="bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded-full hover:shadow-md hover:scale-101 active:scale-95 transition-all shadow-[0_2px_0_rgba(0,0,0,0.1)]">
             Login
-          </button>
+          </Link>
         </div>
       </div>
     </nav>

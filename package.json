@@ -1,5 +1,5 @@
 {
-  "name": "temp-next-app",
+  "name": "huntersville-travel-platform",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,7 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "next": "15.1.11",
+    "next": "15.1.0",
     "react": "19.0.0",
     "react-dom": "19.0.0"
   },

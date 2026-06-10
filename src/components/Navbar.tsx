@@ -1,12 +1,16 @@
+"use client";
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
+  const pathname = usePathname();
   return (
     <nav className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter py-4 bg-surface/80 backdrop-blur-md shadow-sm transition-all duration-300">
       <div className="max-w-container-max mx-auto w-full flex justify-between items-center px-4 md:px-0">
         <div className="flex items-center gap-md">
           <Link
-            className="font-display-lg text-display-lg-mobile md:text-display-lg text-primary scale-101 hover:shadow-md active:scale-95 transition-transform"
+            className="font-display-lg text-display-md-mobile md:text-display-md text-primary"
             href="/"
           >
             HuntersVilleTours
@@ -15,18 +19,13 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-lg">
           <ul className="flex items-center gap-md font-label-md text-label-md">
             <li>
-              <Link className="text-primary font-bold border-b-2 border-primary py-1" href="/">
+              <Link className={`${pathname === '/explore' ? 'text-primary font-bold border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'} transition-all duration-200 py-1 px-2 rounded`} href="/explore">
                 Explore
               </Link>
             </li>
             <li>
-              <Link className="text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-all duration-200 py-1 px-2 rounded" href="/build">
-                Build Journey
-              </Link>
-            </li>
-            <li>
-              <Link className="text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-all duration-200 py-1 px-2 rounded" href="/dashboard">
-                Dashboard
+              <Link className={`${pathname === '/about' ? 'text-primary font-bold border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'} transition-all duration-200 py-1 px-2 rounded`} href="/about">
+                About HuntersVille
               </Link>
             </li>
           </ul>

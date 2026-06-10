@@ -1,6 +1,6 @@
 export default function Testimonials() {
   return (
-    <section className="max-w-container-max mx-auto px-gutter mb-xl py-xl scroll-reveal bg-surface-container-low rounded-3xl shadow-sm">
+    <section className="mx-auto px-gutter pt-lg pb-md scroll-reveal bg-surface-container-low rounded-3xl shadow-sm">
       <div className="text-center max-w-3xl mx-auto px-4 py-12">
         <span className="material-symbols-outlined text-[56px] text-primary/20 mb-8">format_quote</span>
         <p className="font-display-lg-mobile text-primary italic mb-10 leading-tight">

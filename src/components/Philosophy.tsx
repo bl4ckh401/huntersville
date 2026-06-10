@@ -1,6 +1,6 @@
 export default function Philosophy() {
   return (
-    <section className="max-w-container-max mx-auto px-gutter mb-xl py-xl scroll-reveal">
+    <section className="max-w-container-max mx-auto px-gutter pt-lg pb-md scroll-reveal">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-xl items-center">
         <div>
           <h2 className="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-md">Our Philosophy</h2>

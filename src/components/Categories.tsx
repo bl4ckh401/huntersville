@@ -21,12 +21,12 @@ const categories = [
 
 export default function Categories() {
   return (
-    <section className="mb-xl py-xl scroll-reveal overflow-hidden pl-4 md:pl-gutter max-w-[1400px] mx-auto">
+    <section className="pt-lg pb-md scroll-reveal overflow-hidden pl-4 md:pl-gutter max-w-[1400px] mx-auto">
       <div className="flex justify-between items-end mb-md pr-4 md:pr-gutter max-w-container-max mx-auto">
         <h2 className="font-headline-md text-headline-md text-primary">Explore by Category</h2>
         <Link
           className="font-label-md text-label-md text-secondary hover:text-secondary-container transition-colors flex items-center gap-1"
-          href="/categories"
+          href="/explore"
         >
           View all <span className="material-symbols-outlined text-[16px]">chevron_right</span>
         </Link>
@@ -36,7 +36,7 @@ export default function Categories() {
           <Link
             key={index}
             className="snap-start shrink-0 w-[85vw] md:w-[45vw] lg:w-[35vw] group relative h-[400px] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2"
-            href={`/category/${category.title.toLowerCase()}`}
+            href="/explore"
           >
             <div
               className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110"

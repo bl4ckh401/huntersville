@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-12 gap-12">
         <div className="col-span-1 md:col-span-5 pr-8">
           <span className="font-display-lg text-white block mb-6">HuntersVilleTours</span>
-          <p className="text-white/70 mb-8 max-w-md leading-relaxed">
+          <p className="text-white/70 mb-8 leading-relaxed">
             Curating unforgettable journeys for the modern explorer. Experience the world with unparalleled luxury, profound respect for nature, and impeccable service.
           </p>
           <div className="flex gap-4">
@@ -27,7 +27,7 @@ export default function Footer() {
         <div className="col-span-1 md:col-span-2">
           <h4 className="font-title-lg font-semibold mb-6 text-white tracking-wide uppercase text-sm">Company</h4>
           <ul className="space-y-4">
-            <li><Link className="hover:text-white transition-colors" href="#">About Us</Link></li>
+            <li><Link className="hover:text-white transition-colors" href="/about">About Us</Link></li>
             <li><Link className="hover:text-white transition-colors" href="#">Sustainability</Link></li>
             <li><Link className="hover:text-white transition-colors" href="#">Careers</Link></li>
             <li><Link className="hover:text-white transition-colors" href="#">Press</Link></li>

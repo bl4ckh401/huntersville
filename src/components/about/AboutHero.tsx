@@ -84,8 +84,9 @@ function createShader(gl: WebGLRenderingContext, type: number, source: string) {
   }
   return shader;
 }
+// eslint-disable-next-line @next/next/no-img-element
+export default function AboutHero() {
 
-export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
 
@@ -192,32 +193,12 @@ export default function Hero() {
         />
       </div>
       <div className="absolute inset-0 hero-gradient z-10"></div>
-      <div className="relative z-20 h-full flex flex-col justify-center items-center text-center px-gutter max-w-container-max mx-auto w-full pt-20">
-        <h1 className="font-display-lg text-display-lg-mobile md:text-display-lg text-white mb-md drop-shadow-md max-w-4xl animate-fade-in-up opacity-0">
-          Crafting Unforgettable Journeys Across the Cradle of Humanity.
-        </h1>
-        <p className="font-body-lg text-body-lg text-white/90 mb-lg max-w-2xl drop-shadow animate-fade-in-up delay-100 opacity-0">
-          Discover, customize, and book premium travel experiences across the globe. From coastal retreats to wildlife safaris.
+      <div className="relative z-10 text-center px-gutter max-w-4xl mx-auto scroll-reveal">
+        <span className="font-label-md text-label-md text-primary-fixed uppercase tracking-widest mb-sm block">HuntersVilleTours</span>
+        <h1 className="font-display-lg text-display-lg-mobile md:text-display-lg text-on-primary mb-md">Our Legacy</h1>
+        <p className="font-body-lg text-body-lg text-surface-container max-w-2xl mx-auto">
+          Pioneering sustainable, luxury travel experiences across the heart of East Africa for over three decades.
         </p>
-        {/* Search Bar */}
-        <div className="backdrop-blur-xl bg-white/10 border border-white/20 rounded-full p-1.5 md:p-2 flex items-center w-full max-w-2xl shadow-2xl transition-all duration-300 hover:bg-white/20 animate-fade-in-up delay-200 opacity-0">
-          <span className="material-symbols-outlined text-white/70 pl-2 md:pl-4 pr-1 md:pr-2 shrink-0">location_on</span>
-          <input
-            className="flex-grow min-w-0 bg-transparent border-none focus:ring-0 text-white font-body-md text-body-md placeholder:text-white/70 py-2 md:py-3 outline-none"
-            placeholder="Where to?"
-            type="text"
-          />
-          <button className="shrink-0 bg-primary text-on-primary rounded-full px-4 py-2 md:px-8 md:py-3 font-label-md text-label-md hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-lg hover:scale-105 active:scale-95 flex items-center gap-1 md:gap-2">
-            <span>Search</span>
-            <span className="material-symbols-outlined text-[16px] md:text-[18px]">arrow_forward</span>
-          </button>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce flex flex-col items-center gap-2">
-          <span className="text-white/70 font-label-sm text-label-sm uppercase tracking-widest">Scroll</span>
-          <span className="material-symbols-outlined text-white/70 text-[24px]">keyboard_arrow_down</span>
-        </div>
       </div>
     </section>
   );

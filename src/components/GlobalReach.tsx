@@ -7,8 +7,8 @@ export default function GlobalReach() {
   ];
 
   return (
-    <section className="w-full bg-primary py-xl my-xl scroll-reveal">
-      <div className="max-w-container-max mx-auto px-gutter text-center">
+    <section className="py-xl px-gutter bg-primary text-on-primary">
+      <div className="max-w-container-max mx-auto text-center scroll-reveal">
         <h2 className="font-display-lg text-display-lg-mobile md:text-display-lg text-white mb-4">
           Global Reach, Local Expertise
         </h2>

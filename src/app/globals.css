@@ -130,6 +130,27 @@
       transform: translateY(0);
     }
   }
+
+  @keyframes float-orb {
+    from { transform: translateY(0px) scale(1); }
+    to   { transform: translateY(-20px) scale(1.05); }
+  }
+
+  @keyframes twinkle {
+    from { opacity: 0.15; }
+    to   { opacity: 0.9; }
+  }
+
+  @keyframes contrail-flow {
+    from { stroke-dashoffset: 0; }
+    to   { stroke-dashoffset: -80; }
+  }
+
+  @keyframes slowPan {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
 }
 
 @utility hero-gradient {
@@ -138,6 +159,10 @@
 
 @utility animate-fade-in-up {
   animation: fadeInUp 1s ease-out forwards;
+}
+
+@utility animate-slow-pan {
+  animation: slowPan 30s ease-in-out infinite;
 }
 
 @utility delay-100 {

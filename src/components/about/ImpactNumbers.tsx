@@ -1,11 +1,14 @@
-const stats = [
-  { value: '30k+', label: 'Acres Protected' },
-  { value: '15', label: 'Partner Communities' },
-  { value: '500+', label: 'Wildlife Rescues' },
-  { value: '25', label: 'Years Excellence' },
-];
+import { getExperienceStats } from '@/lib/content-store';
 
-export default function ImpactNumbers() {
+export default async function ImpactNumbers() {
+  const statsResult = await getExperienceStats();
+  const stats = [
+    { value: `${statsResult.totalExperiences}`, label: 'Curated Experiences' },
+    { value: `${statsResult.activeExperiences}`, label: 'Active Trips' },
+    { value: `${statsResult.totalBookings}`, label: 'Bookings Managed' },
+    { value: statsResult.latestExperience?.category ?? '—', label: 'Newest Category' },
+  ];
+
   return (
     <section className="py-xl px-gutter bg-primary text-on-primary">
       <div className="max-w-container-max mx-auto text-center scroll-reveal">

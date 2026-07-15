@@ -1,0 +1,94 @@
+{
+  "experiences": [
+    {
+      "id": "exp-1",
+      "title": "The Great Migration Luxury Safari",
+      "category": "Safari",
+      "location": "Maasai Mara, Kenya",
+      "duration": "5 Days",
+      "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuB7vsSD91kLxtFCl4XncmbCZunrQnpncVXsuwvGqC9otyeE_koPRDWBWncTpdRdmulIwPhb4dtQ4icd1TLzRNbN8JtBadflyv3Ue6Gx8Sccu65i4IWvRPorl4Ut1GysdTEuCxk1cbp0niBF6P00fPK6HkvcU6hZ3meylX7OnWhwW43Zcx8CmBffnzegxeiy_L69hmvD_UKglIdR-DpNDxK6lWJjI7M1UlmO20in3s7ykjZVgBVy8YbdZ0FBPudaGtJ8T30TaEnx",
+      "description": "Witness one of nature's greatest spectacles from the comfort of a premium tented camp with expert guides.",
+      "price": "$2,450",
+      "capacity": 12,
+      "status": "Active",
+      "bookings": 8,
+      "createdAt": "2026-01-10T10:00:00.000Z"
+    },
+    {
+      "id": "exp-2",
+      "title": "Kilimanjaro Summit Machame Route",
+      "category": "Hiking",
+      "location": "Mt. Kilimanjaro, Tanzania",
+      "duration": "7 Days",
+      "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBYK_CZ4OwiLBVJJrXuoTd9EtvGyiaBFgOuED6Q99gA3cBPk12fS2o6gv74qjG3iPaUF18tT-pN7gZ4f3coJaxemnz_bxUyKcw_GgR_JCWcdRoPnPvEOMao7CTDipKsJYFYSjZX-o6nMrxeivc1LJAjgrf0df5gAgeYy4WDAqInN1-J-eh2b3cOCIt1iTNQ6kcuOr0OxmjftHJVzRjtw700UUwa_UG_BAG3KErGrcKHuRX3qUh_C98R_3_mJ7pxC2G9cKnmOkK4",
+      "description": "Conquer the roof of Africa via the scenic Machame route, known for its stunning views and high success rate.",
+      "price": "$1,890",
+      "capacity": 8,
+      "status": "Active",
+      "bookings": 5,
+      "createdAt": "2026-01-15T12:00:00.000Z"
+    },
+    {
+      "id": "exp-3",
+      "title": "Zanzibar Spice & Stone Town Retreat",
+      "category": "Coastal",
+      "location": "Zanzibar, Tanzania",
+      "duration": "3 Days",
+      "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuAxmJZuJVbgIa6Wiyti5ZGQ2YDzDE4WA2v02Th8D6oaaaUIOl41XD4fKGv2tuWf_BP97PXMPZXz3hMIC4MzpsEEt_MOUXXIq1k6PrcxWAJ0VlKNw-I8TrawxVjyg742Soo00o7s_xzrBsbv8kU1VxTzTrIKzzOVKFxkTqt_GbiuQhtTbuWbiG1ti6h9Z2e2jXFkfi_hbhibwpbK3Ydmps7xN94f5hR9ALNzbWlq34_NsM0kzxgGe08L4gp_7ioVXgifOMHxjvFL",
+      "description": "Immerse yourself in the rich history of Stone Town and unwind on pristine, white-sand beaches.",
+      "price": "$650",
+      "capacity": 20,
+      "status": "Active",
+      "bookings": 3,
+      "createdAt": "2026-02-01T08:30:00.000Z"
+    },
+    {
+      "id": "exp-4",
+      "title": "Gorilla Trekking Expedition",
+      "category": "Wildlife",
+      "location": "Bwindi, Uganda",
+      "duration": "4 Days",
+      "image": "https://lh3.googleusercontent.com/aida-public/AB6AXuBGBJsrn26mJdWlssUAlBW9Fuu76OtmXo8sdZ69xG4uccHZWsGWlGW9kwzma7x8A6fRsexHSNo9a9EqTMgEfIM__iNJTKrEePlRZ_FHel6Hm_TPHAaDVE90sW0DqTyGLXvZ24Og8l_uvK9SDcL3iZq-KcuTtSG_2Avot3XidYBmWY825K_kHJpwXVZcTLyNzdYpSGSuWSAsAzcXnutFwvKO5H9PaGSXOGYbbYRMf_ZVTJ9Lp-0px1NDyCRPFw9ZI0G0zWiui23x",
+      "description": "A once-in-a-lifetime journey into the impenetrable forest to encounter majestic mountain gorillas.",
+      "price": "$3,100",
+      "capacity": 6,
+      "status": "Active",
+      "bookings": 2,
+      "createdAt": "2026-02-14T09:15:00.000Z"
+    }
+  ],
+  "bookings": [
+    {
+      "id": "booking-1",
+      "travelerName": "Eleanor Vance",
+      "experienceId": "exp-1",
+      "experienceTitle": "The Great Migration Luxury Safari",
+      "date": "2026-07-14",
+      "amount": "$2,450",
+      "paymentMethod": "Card",
+      "status": "Paid",
+      "createdAt": "2026-06-20T10:00:00.000Z"
+    },
+    {
+      "id": "booking-2",
+      "travelerName": "Marcus Sterling",
+      "experienceId": "exp-3",
+      "experienceTitle": "Zanzibar Spice & Stone Town Retreat",
+      "date": "2026-07-18",
+      "amount": "$650",
+      "paymentMethod": "M-Pesa",
+      "status": "Pending",
+      "createdAt": "2026-06-24T10:00:00.000Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "user-1783353751732",
+      "email": "jane@example.com",
+      "password": "test123",
+      "name": "Jane Smith",
+      "role": "traveler",
+      "createdAt": "2026-07-06T16:02:31.732Z"
+    }
+  ]
+}

@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import BottomNav from "@/components/BottomNav";
 import ScrollObserver from "@/components/ScrollObserver";
 
 const playfair = Playfair_Display({
@@ -34,12 +31,9 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className={`${playfair.variable} ${inter.variable} bg-background text-on-background font-body-md antialiased min-h-screen flex flex-col pb-[80px] md:pb-0`}>
+      <body className={`${playfair.variable} ${inter.variable} bg-background text-on-background font-body-md antialiased min-h-screen flex flex-col`}>
         <ScrollObserver />
-        <Navbar />
         {children}
-        <Footer />
-        <BottomNav />
       </body>
     </html>
   );

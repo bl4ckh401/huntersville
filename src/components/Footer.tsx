@@ -58,7 +58,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="max-w-container-max mx-auto mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white/50">
-        <p>© 2024 HuntersVilleTours. All rights reserved.</p>
+        <p>© 2026 HuntersVilleTours. All rights reserved.</p>
         <div className="flex gap-6">
           <Link className="hover:text-white transition-colors" href="#">Privacy Policy</Link>
           <Link className="hover:text-white transition-colors" href="#">Terms of Service</Link>

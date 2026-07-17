@@ -3,23 +3,23 @@ import Image from "next/image";
 const team = [
   {
     name: 'Jimmy Lee',
-    role: 'Founder & Visionary',
+    role: 'Co-Founder',
     bio: 'Pioneering luxury eco-tourism with a lifelong dedication to preserving Kenya\'s heritage.',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBahsDQILuG5f8T9FT54uAjc_smSmv5VaZDs9_Li07Q1T8k4mFg9L4xTNjftArBi-RGeslhr8TMkpg6v-8SVBY8U4qPZECJOZ_Zb87phXmt2dOiT0yIQql3M1ttaioMR_PtvIsfAkwgPZHM8L0YMmRHv6ZTRCN2vyRno0B8gATcLZxCJc7TG-oHOgdQ0iCeE812r6pF2uKxvCtYYKC0BtpIUWHzGPNXqIG0dw84RdmMZ-cW5zuatvgN8wJeLapHQL79r1CNdzXK',
+    image: '/lee.jpeg',
     delay: 0,
   },
   {
     name: 'Godwin Kiprono',
-    role: 'Head of Conservation',
+    role: 'Co-Founder',
     bio: 'Leading our community and wildlife initiatives to ensure a sustainable footprint.',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDmdHtQFAcizwvCYakb4I-NfOn-vxS4WHQmVk2Y1ffVCqH49_hwFtv8MZEV7KGSBEtmzfuCj5ZBEAhum3g9DCrLjFQNKyWNjLK-xXtXB7WzEU0ziZx5396EN33P-hietp-VIhCQF3BviXuWn8DeyyZWXcb0MXVz-74j-H6T3wQJiQlYjYkW53mkLwXIlMy2eRqAK5sPoTwaVh3JibwzWp2JKPGDz3dJ5TfeHme47jTQEtvwI1htfEWcE0RRkyKdOlaujoR4sSuc',
+    image: '/gkk.jpeg',
     delay: 100,
   },
   {
     name: 'Pavin Kiptoo',
     role: 'Developer',
     bio: 'A master tracker whose intimate knowledge of the Mara brings every safari to life.',
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC7iganT-loSADw8alA8Ul_AdqkXRSEcSccNzOrNBSqtEm7_U9DZTXoBceT_9oGcH7gvFt8PTWUDzePzlM53w5mAdjTFJhcCZwtjL57ZHlvdLzXjyNr0weJ5DK_ox0_TQreECFALZaknIWdbc34XcW5j01mqxi-WegFEOQcBUI3U9deZBgcxHTWXBT43IpDOlJ6HJAAif2AUAg-fW7ZSZ-LB6BdBC2JbnAjB1qytiLW9-m961j8RUhwzx97Nkk_eKOEed-NkVxa',
+    image: '/pkk.jpg',
     delay: 200,
   },
 ];

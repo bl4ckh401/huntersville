@@ -13,7 +13,7 @@ export default function MissionVision() {
             </div>
             <h3 className="font-title-lg text-title-lg text-primary mb-sm">Our Mission</h3>
             <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-              To orchestrate seamless, awe-inspiring safaris that immerse our guests in the majestic landscapes of East Africa, while actively funding and supporting local wildlife conservation and community empowerment initiatives.
+              To create meaningful travel experiences that connect people to Kenya&apos;s landscapes, wildlife, and culture in a genuine and unforgettable way.
             </p>
           </div>
 
@@ -24,7 +24,7 @@ export default function MissionVision() {
             </div>
             <h3 className="font-title-lg text-title-lg text-primary mb-sm">Our Vision</h3>
             <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-              To be the global benchmark for sustainable, luxury ecotourism in Africa, recognized for creating profound connections between discerning travelers and the untamed natural world.
+              To become a trusted gateway to authentic African travel, where every journey inspires connection, respect, and wonder.
             </p>
           </div>
         </div>

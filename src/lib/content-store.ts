@@ -173,6 +173,7 @@ export interface Booking {
   amount: string;
   paymentMethod: string;
   guestCount?: number;
+  travelers?: Array<{ name: string; age: string; type: string }>;
   specialRequests?: string;
   note?: string;
   status: BookingStatus;
@@ -594,6 +595,7 @@ export async function getBookings(): Promise<Booking[]> {
 
 export async function createBooking(input: Record<string, unknown>): Promise<Booking> {
   const experience = getExperienceRecord(asString(input.experienceId));
+  const travelers = input.travelers as Array<{ name: string; age: string; type: string }> | undefined;
   const booking: Booking = {
     id: `booking-${Date.now()}`,
     travelerName: asString(input.travelerName),
@@ -605,6 +607,7 @@ export async function createBooking(input: Record<string, unknown>): Promise<Boo
     amount: asString(input.amount, experience?.price || '$0'),
     paymentMethod: asString(input.paymentMethod, 'Card'),
     guestCount: asNumber(input.guestCount) ?? undefined,
+    travelers,
     specialRequests: asString(input.specialRequests),
     note: asString(input.note),
     status: (asString(input.status, 'Pending') as BookingStatus) || 'Pending',

@@ -32,7 +32,7 @@ export default async function ExplorePage({ searchParams }: { searchParams: Prom
   }));
 
   return (
-    <div className="flex flex-1 mb-16 pt-[120px] max-w-container-max mx-auto w-full px-gutter md:px-lg gap-lg">
+    <div className="flex flex-1 mb-16 pt-[88px] max-w-container-max mx-auto w-full px-gutter md:px-lg gap-md">
       <FilterSidebar />
 
       <main className="flex-1 pb-xl">

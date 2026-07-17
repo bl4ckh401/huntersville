@@ -195,9 +195,9 @@ export default function AboutHero() {
       <div className="absolute inset-0 hero-gradient z-10"></div>
       <div className="relative z-10 text-center px-gutter max-w-4xl mx-auto scroll-reveal">
         <span className="font-label-md text-label-md text-primary-fixed uppercase tracking-widest mb-sm block">HuntersVilleTours</span>
-        <h1 className="font-display-lg text-display-lg-mobile md:text-display-lg text-on-primary mb-md">Our Legacy</h1>
+        <h1 className="font-display-lg text-display-lg-mobile md:text-display-lg text-on-primary mb-md">Our Story</h1>
         <p className="font-body-lg text-body-lg text-surface-container max-w-2xl mx-auto">
-          Pioneering sustainable, luxury travel experiences across the heart of East Africa for over three decades.
+          Born in Kenya, inspired by its wild beauty. We create experiences that go beyond ticking destinations off a list.
         </p>
       </div>
     </section>

@@ -23,7 +23,7 @@ export default function SideNav({ isOpen, onClose }: SideNavProps) {
       <div className="flex items-center gap-sm mb-lg px-sm">
         <img alt="HuntersVille Logo" className="w-10 h-10 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZi3Iqbq5OCtz5h2zBCLfzgzJyhBlZPSd8LU513mbtqGDyrJDAClSEeZXwK70atF0k9bAcmK0COVQxjkb6CD7rwLBycbVc7IqYRtWYT2pqyMZ4cxHnIVllAx8grDakIS-AoMvY1g4px43lOK9q_zSFkcxzZ8L5_1_RW1MgCvqn4bsyWlvmjxIZPJuiuWanUwCQcEN88MZeBkQU2MrCnfJNjFJDivtYXdr4IaA9Fd8TH6oy8wqDwgHUqywtpvdeTFFhvEvOupEh" />
         <div>
-          <p className="font-label-sm text-label-sm text-on-surface-variant">Global Travel Management</p>
+          <p className="font-label-sm text-label-sm text-on-surface-variant">HuntersVille</p>
         </div>
       </div>
       <div className="flex-1 flex flex-col gap-xs">

@@ -16,7 +16,7 @@ export default function TopNav({ onMenuToggle }: TopNavProps) {
         >
           <span className="material-symbols-outlined">menu</span>
         </button>
-        <h2 className="font-headline-sm text-headline-sm font-bold text-primary hidden md:block">HuntersVille Admin</h2>
+        <h2 className="font-headline-sm text-headline-sm font-bold text-primary hidden md:block">HuntersVille</h2>
         <div className="relative hidden sm:block">
           <span className="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-on-surface-variant text-opacity-50">search</span>
           <input className="pl-xl pr-sm py-xs bg-surface-container-lowest border border-outline-variant rounded-full font-body-md text-body-md focus:border-secondary focus:ring-1 focus:ring-secondary outline-none transition-all w-64" placeholder="Search insights..." type="text"/>

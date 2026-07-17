@@ -5,6 +5,7 @@ import MissionVision from '@/components/about/MissionVision';
 import MeetTheExplorers from '@/components/about/MeetTheExplorers';
 import ImpactNumbers from '@/components/about/ImpactNumbers';
 import CoreValues from '@/components/about/CoreValues';
+import ReadyToExplore from '@/components/about/ReadyToExplore';
 
 export const metadata: Metadata = {
   title: 'About Us - HuntersVilleTours',
@@ -20,6 +21,7 @@ export default function AboutPage() {
       <MeetTheExplorers />
       <ImpactNumbers />
       <CoreValues />
+      <ReadyToExplore />
     </div>
   );
 }

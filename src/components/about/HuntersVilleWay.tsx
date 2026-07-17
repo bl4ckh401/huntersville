@@ -8,24 +8,17 @@ export default function HuntersVilleWay() {
         {/* Text Column */}
         <div className="lg:col-span-5 scroll-reveal md:pr-8">
           <span className="font-label-md text-label-md text-surface-tint uppercase tracking-widest mb-4 block">
-            Our Heritage
+            Our Story
           </span>
           <h2 className="font-headline-md text-[32px] md:text-[44px] text-primary mb-6 leading-tight">
-            The HuntersVille Way
+            Every journey has a beginning
           </h2>
           <p className="font-body-lg text-body-lg text-on-surface-variant mb-6 leading-relaxed">
-            For over three decades, we have defined the pinnacle of luxury safari experiences. Born from a profound reverence for East Africa's untamed wilderness, our journey began with a simple yet ambitious vision: to share the raw beauty of Africa without compromising on elegance or ecological integrity.
+            Ours started with a simple belief: that travel should feel real. Not rushed. Not crowded. Not scripted. Just real.
           </p>
-          <p className="font-body-md text-body-md text-on-surface-variant mb-8">
-            Today, HuntersVilleTours remains a testament to that enduring promise, curating bespoke adventures that resonate with the soul while fiercely protecting the lands we traverse.
+          <p className="font-body-md text-body-md text-on-surface-variant mb-6 leading-relaxed">
+            Born in Kenya and inspired by its wild beauty, our company was created to offer something different. Experiences that go beyond ticking destinations off a list. We wanted travelers to feel the rhythm of the land, to hear stories from local voices, to witness nature in its purest form.
           </p>
-          <Link
-            className="inline-flex items-center font-label-md text-label-md text-primary font-bold border-b-2 border-primary pb-1 hover:text-primary-container transition-colors group"
-            href="#"
-          >
-            Discover Our Conservation Efforts
-            <span className="material-symbols-outlined ml-2 group-hover:translate-x-1 transition-transform">arrow_forward</span>
-          </Link>
         </div>
 
         {/* Image Column */}
@@ -34,7 +27,7 @@ export default function HuntersVilleWay() {
             <Image
               width={1920}
               height={1080}
-              alt="Luxury Safari Camp — an elevated tented lodge overlooking an open Serengeti plain at dusk"
+              alt="Kenyan savannah landscape at golden hour"
               className="w-full h-full object-cover"
               src="/safarihouse.png"
             />

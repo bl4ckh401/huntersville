@@ -172,8 +172,20 @@ export default function FeaturedScrollExperience({ experiences }: { experiences:
   return (
     <section ref={sectionRef} className="relative w-full bg-background">
 
-      {/* Pinned Outer Canvas Centerpiece Viewport */}
-      <div ref={pinRef} className="relative h-screen w-full overflow-hidden text-white pt-[72px] flex items-center justify-center">
+      {/*
+        FIX: this pinned viewport had NO opaque background. Once GSAP pins
+        it, it becomes `position: fixed`, and fixed/positioned elements
+        always paint ABOVE normal static-flow content in the same stacking
+        context — regardless of DOM order. Since the only opaque pixels in
+        here were the 82vw x 58vh `.exp-card`, every other pixel (the
+        letterboxed margins around the card) was transparent for the
+        ENTIRE time this section stayed pinned, letting whatever was
+        actually scrolled to that screen position (Philosophy) show
+        straight through underneath. `bg-background` matches the same
+        pattern already used by GlobalReach's pinRef and by
+        Coastal/SavannahTimeline's pinned <section> elements.
+      */}
+      <div ref={pinRef} className="relative h-screen w-full overflow-hidden text-white pt-[72px] flex items-center justify-center bg-background">
 
         {/* Editorial Section context header — positioned under the navbar gap */}
         <div className="section-header absolute top-[100px] left-10 md:left-24 z-50 mix-blend-difference pointer-events-none">

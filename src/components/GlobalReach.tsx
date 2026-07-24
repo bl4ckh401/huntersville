@@ -20,6 +20,18 @@ const DESTINATION_META: Record<string, { color: string; desc: string }> = {
   'Rwanda': { color: '#38bdf8', desc: 'A breathtaking tapestry of rolling hills and profound resilience.' },
 };
 
+/**
+ * Deterministic scene selection — same result on the server render and the
+ * client hydration pass. The old code used `.sort(() => 0.5 - Math.random())`,
+ * which produces a DIFFERENT order every render, causing a React hydration
+ * mismatch (server HTML != client HTML) and a forced remount of this
+ * component right as the page loads — which was retriggering the whole
+ * GSAP/ScrollTrigger setup at an unpredictable moment.
+ */
+function pickStableScenes<T extends { id: string | number }>(items: T[], count: number): T[] {
+  return [...items].sort((a, b) => String(a.id).localeCompare(String(b.id))).slice(0, count);
+}
+
 export default function GlobalReach({ experiences = [] }: GlobalReachProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
@@ -36,9 +48,7 @@ export default function GlobalReach({ experiences = [] }: GlobalReachProps) {
     });
 
     const chapters = Array.from(destMap.entries()).map(([dest, exps]) => {
-      // Shuffle and take top 3 scenes to form the chapter
-      const shuffled = [...exps].sort(() => 0.5 - Math.random());
-      const selectedScenes = shuffled.slice(0, 3);
+      const selectedScenes = pickStableScenes(exps, 3);
       const meta = DESTINATION_META[dest] || {
         color: '#a8a29e',
         desc: 'Discover breathtaking landscapes and untamed wilderness.'
@@ -59,50 +69,36 @@ export default function GlobalReach({ experiences = [] }: GlobalReachProps) {
     if (!sectionRef.current || !pinRef.current || journeyChapters.length === 0) return;
 
     const ctx = gsap.context(() => {
-      // Calculate Scroll Distance Based on Image Counts (4s per image)
-      let totalTimelineUnits = 0;
-      journeyChapters.forEach((chapter, cIdx) => {
-        totalTimelineUnits += 4.5; // Intro duration
-        chapter.scenes.forEach(scene => {
-          const imgCount = scene.galleryImages ? scene.galleryImages.length + 1 : 1;
-          totalTimelineUnits += (imgCount * 4); // 4 units per photo
-        });
-        if (cIdx < journeyChapters.length - 1) totalTimelineUnits += 3; // Interlude duration
-      });
-      totalTimelineUnits += 5; // Earned Outro
+      // Scope every query to this section — avoids ever touching another
+      // instance's `.scene-text` / `.nav-pill` / etc, and keeps cleanup
+      // automatic when ctx.revert() runs.
+      const q = gsap.utils.selector(sectionRef);
 
-      // Proportional physical scroll track
-      const scrollDistance = Math.max(totalTimelineUnits * 300, 3000);
-
-      const masterTimeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: `+=${scrollDistance}px`,
-          scrub: 1.2,
-          pin: pinRef.current,
-          refreshPriority: 5,
-        }
-      });
+      // Build the timeline UNATTACHED to any ScrollTrigger first. Once it's
+      // fully built we can ask it its real duration and size the pinned
+      // scroll distance off of THAT — instead of a hand-maintained estimate
+      // that silently drifts out of sync with the timeline (which is what
+      // was causing the "frozen" dead-scroll patches at the start and end).
+      const masterTimeline = gsap.timeline({ paused: true });
 
       // UI Selectors
-      const navPills = gsap.utils.toArray<HTMLDivElement>('.nav-pill');
-      const progressFills = gsap.utils.toArray<HTMLDivElement>('.progress-fill');
-      const mapDot = document.querySelector('.map-active-dot') as HTMLDivElement;
-      const mapChecks = gsap.utils.toArray<HTMLSpanElement>('.nav-check');
+      const navPills = q('.nav-pill');
+      const progressFills = q('.progress-fill');
+      const mapDot = q('.map-active-dot')[0] as HTMLDivElement;
+      const mapChecks = q('.nav-check');
 
       // Rest States
-      gsap.set('.chapter-intro', { opacity: 0 });
-      gsap.set('.scene-layer', { opacity: 0 });
-      gsap.set('.scene-text', { opacity: 0, y: 30 });
-      gsap.set('.interlude-screen', { opacity: 0 });
-      gsap.set('.outro-screen', { opacity: 0 });
+      gsap.set(q('.chapter-intro'), { opacity: 0 });
+      gsap.set(q('.scene-layer'), { opacity: 0 });
+      gsap.set(q('.scene-text'), { opacity: 0, y: 30 });
+      gsap.set(q('.interlude-screen'), { opacity: 0 });
+      gsap.set(q('.outro-screen'), { opacity: 0 });
       gsap.set(progressFills, { scaleX: 0, transformOrigin: 'left center' });
       gsap.set(navPills, { width: '90px', padding: '4px 12px', opacity: 0.4 });
       gsap.set(mapChecks, { opacity: 0, scale: 0 });
 
       // First intro screen visibly ready
-      gsap.set(`.chapter-intro-0`, { opacity: 1 });
+      gsap.set(q('.chapter-intro-0'), { opacity: 1 });
 
       let currentTime = 0;
 
@@ -121,25 +117,25 @@ export default function GlobalReach({ experiences = [] }: GlobalReachProps) {
 
         // Expand current active pill
         masterTimeline.to(navPills[cIdx], { width: '240px', padding: '4px 24px', opacity: 1, duration: 1.5, ease: 'power2.inOut' }, currentTime);
-        masterTimeline.to(`.nav-text-${cIdx}`, { letterSpacing: '0.2em', fontWeight: 700, duration: 1.5 }, currentTime);
+        masterTimeline.to(q(`.nav-text-${cIdx}`), { letterSpacing: '0.2em', fontWeight: 700, duration: 1.5 }, currentTime);
 
         // 2. Chapter Cinematic Intro (Dissolves)
         if (cIdx > 0) {
-          masterTimeline.to(`.chapter-intro-${cIdx}`, { opacity: 1, duration: 1.5 }, currentTime);
+          masterTimeline.to(q(`.chapter-intro-${cIdx}`), { opacity: 1, duration: 1.5 }, currentTime);
           currentTime += 1.5;
         }
         currentTime += 1.5; // Hold intro
-        masterTimeline.to(`.chapter-intro-${cIdx}`, { opacity: 0, duration: 1.5 }, currentTime);
+        masterTimeline.to(q(`.chapter-intro-${cIdx}`), { opacity: 0, duration: 1.5 }, currentTime);
 
         // Dissolve into first scene edge-to-edge
-        masterTimeline.to(`.scene-r${cIdx}-s0`, { opacity: 1, duration: 1.5 }, currentTime);
+        masterTimeline.to(q(`.scene-r${cIdx}-s0`), { opacity: 1, duration: 1.5 }, currentTime);
         currentTime += 1.5;
 
         // 3. Journey Scenes (Based on Image Counts)
         chapter.scenes.forEach((scene, sIdx) => {
           const panelClass = `.scene-r${cIdx}-s${sIdx}`;
-          const images = gsap.utils.toArray<HTMLDivElement>(document.querySelectorAll(`${panelClass} .scene-img`));
-          const textGroup = document.querySelector(`${panelClass} .scene-text`);
+          const images = q(`${panelClass} .scene-img`);
+          const textGroup = q(`${panelClass} .scene-text`)[0];
 
           // Text Fades In Over Active Image
           masterTimeline.to(textGroup, { opacity: 1, y: 0, duration: 1.5, ease: 'power3.out' }, currentTime);
@@ -163,17 +159,17 @@ export default function GlobalReach({ experiences = [] }: GlobalReachProps) {
 
           // Crossfade to Next Scene OR hide this scene if moving to interlude
           if (sIdx < chapter.scenes.length - 1) {
-            masterTimeline.to(`.scene-r${cIdx}-s${sIdx + 1}`, { opacity: 1, duration: 1.5 }, currentTime - 1.5);
+            masterTimeline.to(q(`.scene-r${cIdx}-s${sIdx + 1}`), { opacity: 1, duration: 1.5 }, currentTime - 1.5);
           }
-          masterTimeline.to(panelClass, { opacity: 0, duration: 1.5 }, currentTime - 1.5);
+          masterTimeline.to(q(panelClass), { opacity: 0, duration: 1.5 }, currentTime - 1.5);
         });
 
         // 4. Interlude Scene (Border Crossing)
         if (cIdx < journeyChapters.length - 1) {
-          masterTimeline.to(`.interlude-${cIdx}`, { opacity: 1, duration: 1 }, currentTime);
+          masterTimeline.to(q(`.interlude-${cIdx}`), { opacity: 1, duration: 1 }, currentTime);
           currentTime += 1;
           currentTime += 1; // Hold interlude
-          masterTimeline.to(`.interlude-${cIdx}`, { opacity: 0, duration: 1 }, currentTime);
+          masterTimeline.to(q(`.interlude-${cIdx}`), { opacity: 0, duration: 1 }, currentTime);
           currentTime += 1;
         }
 
@@ -182,7 +178,22 @@ export default function GlobalReach({ experiences = [] }: GlobalReachProps) {
       });
 
       // 6. Earned Grand Outro
-      masterTimeline.to('.outro-screen', { opacity: 1, duration: 2, ease: 'power2.out' }, currentTime);
+      masterTimeline.to(q('.outro-screen'), { opacity: 1, duration: 2, ease: 'power2.out' }, currentTime);
+
+      // Now that the timeline is fully built, its .duration() is the real,
+      // ground-truth length — no more manual estimate to drift out of sync.
+      const PX_PER_UNIT = 240; // tune this single number to taste
+      const scrollDistance = Math.max(masterTimeline.duration() * PX_PER_UNIT, 3000);
+
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: 'top top',
+        end: `+=${scrollDistance}`,
+        scrub: 1.2,
+        pin: pinRef.current,
+        refreshPriority: 5,
+        animation: masterTimeline,
+      });
 
     }, sectionRef);
 

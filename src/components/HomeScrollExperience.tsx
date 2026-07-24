@@ -73,8 +73,31 @@ export default function HomeScrollExperience() {
       {/* Timelines Container */}
       <div className="relative z-10">
         <SavannahTimeline />
+
+        {/*
+          Spacer between two adjacent PINNED sections. Without this, the
+          CoastalTimeline's ScrollTrigger ('top top') sits flush against the
+          bottom edge of SavannahTimeline's pinned area. GSAP can then fire
+          Coastal's pin a moment early (fast scroll / rounding / a refresh
+          mid-transition), and since the incoming pinned section becomes
+          `position: fixed` and covers the full viewport, it visibly
+          overlaps the outgoing one for a moment. Same class of bug as the
+          Philosophy/FeaturedScrollExperience collision — always give
+          adjacent pinned sections a breather.
+        */}
+        {/* <div className="h-32 w-full bg-[#010d18]" /> */}
+
         <CoastalTimeline />
       </div>
+
+      {/*
+        Trailing spacer: CoastalTimeline is the LAST pinned section inside
+        this component, and whatever renders right after
+        <HomeScrollExperience /> in page.tsx (Philosophy) needs the same
+        breathing room. Keep this here so the boundary is guaranteed no
+        matter what page.tsx does around this component.
+      */}
+      <div className="h-32 w-full bg-background" />
     </div>
   );
 }

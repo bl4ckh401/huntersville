@@ -45,13 +45,14 @@ function HeroContent() {
 
 export default function HomeScrollExperience() {
   useEffect(() => {
-    // Hero Entrance Animation (fades in hero text)
-    const heroTl = gsap.timeline();
-    heroTl.to(['.hero-eyebrow', '.hero-headline', '.hero-sub'], {
-      opacity: 1,
-      y: -20,
-      duration: 1.5,
-      stagger: 0.25,
+    const heroContent = document.querySelector('.hero-content');
+    if (!heroContent) return;
+
+    const tl = gsap.timeline();
+    tl.from(heroContent, {
+      opacity: 0,
+      y: 30,
+      duration: 1.2,
       ease: 'power3.out',
       delay: 0.3,
     });

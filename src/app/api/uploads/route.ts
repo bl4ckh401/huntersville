@@ -1,10 +1,17 @@
 import { NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
-import { randomUUID } from 'crypto';
+
+const CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME;
+const UPLOAD_PRESET = process.env.CLOUDINARY_UPLOAD_PRESET;
 
 export async function POST(request: Request) {
   try {
+    if (!CLOUD_NAME || !UPLOAD_PRESET) {
+      return NextResponse.json(
+        { error: 'Cloudinary configuration missing' },
+        { status: 500 }
+      );
+    }
+
     const formData = await request.formData();
     const files = formData.getAll('files').filter((entry): entry is File => entry instanceof File);
 
@@ -12,22 +19,35 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'No files provided' }, { status: 400 });
     }
 
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-    await fs.mkdir(uploadDir, { recursive: true });
-
     const urls = await Promise.all(
       files.map(async (file) => {
-        const extension = path.extname(file.name) || '.bin';
-        const fileName = `${randomUUID()}${extension}`;
-        const destination = path.join(uploadDir, fileName);
-        const bytes = Buffer.from(await file.arrayBuffer());
-        await fs.writeFile(destination, bytes);
-        return `/uploads/${fileName}`;
-      }),
+        const uploadData = new FormData();
+        uploadData.append('file', file);
+        uploadData.append('upload_preset', UPLOAD_PRESET);
+        uploadData.append('folder', 'huntersville');
+
+        const response = await fetch(
+          `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+          {
+            method: 'POST',
+            body: uploadData,
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Cloudinary upload failed: ${response.status}`);
+        }
+
+        const result = await response.json();
+        return result.secure_url;
+      })
     );
 
     return NextResponse.json({ urls });
   } catch (error) {
-    return NextResponse.json({ error: error instanceof Error ? error.message : 'Upload failed' }, { status: 500 });
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : 'Upload failed' },
+      { status: 500 }
+    );
   }
 }

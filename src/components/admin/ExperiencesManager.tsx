@@ -34,17 +34,22 @@ export default function ExperiencesManager() {
 
   async function handleCreate(input: Record<string, unknown>) {
     setIsSubmitting(true);
-    const response = await fetch('/api/experiences', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(input),
-    });
+    try {
+      const response = await fetch('/api/experiences', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(input),
+      });
 
-    if (response.ok) {
-      setIsCreating(false);
-      refresh();
-    } else {
-      alert('Failed to create experience');
+      if (response.ok) {
+        setIsCreating(false);
+        refresh();
+      } else {
+        const body = await response.json().catch(() => ({}));
+        alert(`Failed to create experience: ${body.error || response.statusText}`);
+      }
+    } catch {
+      alert('Failed to create experience: network error');
     }
     setIsSubmitting(false);
   }
@@ -52,17 +57,22 @@ export default function ExperiencesManager() {
   async function handleUpdate(input: Record<string, unknown>) {
     if (!editingExperience) return;
     setIsSubmitting(true);
-    const response = await fetch(`/api/experiences/${editingExperience.id}/update`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(input),
-    });
+    try {
+      const response = await fetch(`/api/experiences/${editingExperience.id}/update`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(input),
+      });
 
-    if (response.ok) {
-      setEditingExperience(null);
-      refresh();
-    } else {
-      alert('Failed to update experience');
+      if (response.ok) {
+        setEditingExperience(null);
+        refresh();
+      } else {
+        const body = await response.json().catch(() => ({}));
+        alert(`Failed to update experience: ${body.error || response.statusText}`);
+      }
+    } catch {
+      alert('Failed to update experience: network error');
     }
     setIsSubmitting(false);
   }

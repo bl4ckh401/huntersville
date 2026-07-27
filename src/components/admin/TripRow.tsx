@@ -26,11 +26,11 @@ const TripRow = React.memo(function TripRow({
     <tr className={`table-row-hover transition-all ${isDraft ? 'bg-surface-bright opacity-80' : 'bg-surface-container-lowest'}`}>
       <td className="py-md px-md">
         <div className="flex items-center gap-md">
-          {trip.image ? (
-            <div className="w-16 h-12 rounded-lg overflow-hidden flex-shrink-0 shadow-sm">
-              <img className="w-full h-full object-cover" src={trip.image} alt={trip.title} />
-            </div>
-          ) : (
+{trip.image || trip.coverPhoto ? (
+             <div className="w-16 h-12 rounded-lg overflow-hidden flex-shrink-0 shadow-sm">
+               <img className="w-full h-full object-cover" src={trip.image || trip.coverPhoto} alt={trip.title} />
+             </div>
+           ) : (
             <div className="w-16 h-12 rounded-lg overflow-hidden flex-shrink-0 shadow-sm bg-surface-container-high flex items-center justify-center">
               <span className="material-symbols-outlined text-outline">image</span>
             </div>

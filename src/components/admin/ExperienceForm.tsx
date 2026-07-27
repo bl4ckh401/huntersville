@@ -420,7 +420,7 @@ async function uploadFiles(files: FileList | null) {
   });
 
   if (!response.ok) {
-    throw new Error('Upload failed');
+    return [] as string[];
   }
 
   const data = await response.json();

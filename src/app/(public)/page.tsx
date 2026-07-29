@@ -24,13 +24,12 @@ export default async function Home() {
         
         {/* Pass the restricted array here */}
         <FeaturedScrollExperience experiences={featuredExperiences} />
-        
-        {/* A tiny physical spacer prevents GSAP pin thresholds from touching and colliding */}
-        {/* <div className="h-32 w-full bg-background" /> */}
 
         {/* Pass the FULL array here so the cinematic chapters actually work */}
         <GlobalReach experiences={allExperiences} />
-        
+
+        <div className="h-16 w-full bg-background" />
+
         <Testimonials />
       </div>
     </main>

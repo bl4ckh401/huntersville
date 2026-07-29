@@ -78,7 +78,7 @@ export default function FeaturedScrollExperience({ experiences }: { experiences:
         });
 
         // Set initial asset rendering constraints
-        gsap.set(images, { opacity: 0, scale: 1.04, filter: 'blur(8px)' });
+        gsap.set(images, { opacity: 0, scale: 1, filter: 'blur(8px)' });
         gsap.set(images[0], { opacity: 1, filter: 'blur(0px)' });
         gsap.set(texts, { opacity: 0, y: 40 });
         gsap.set(dots, { opacity: 0.2 });
@@ -232,7 +232,7 @@ export default function FeaturedScrollExperience({ experiences }: { experiences:
                     {displayImages.map((src, imgIndex) => (
                       <div
                         key={imgIndex}
-                        className="exp-img absolute inset-0 bg-cover bg-center"
+                        className="exp-img absolute inset-0 bg-cover bg-no-repeat bg-center"
                         style={{ backgroundImage: `url('${src}')` }}
                       />
                     ))}
@@ -258,9 +258,11 @@ export default function FeaturedScrollExperience({ experiences }: { experiences:
                         {experience.title}
                       </h3>
 
-                      <p className="reveal-text font-normal text-sm sm:text-base md:text-lg text-white/75 mb-6 max-w-2xl leading-relaxed line-clamp-2">
-                        {experience.summary || experience.description}
-                      </p>
+                      <p
+                        className="reveal-text font-normal text-sm sm:text-base md:text-lg text-white/75 mb-6 max-w-2xl leading-relaxed line-clamp-2"
+                        dangerouslySetInnerHTML={{ __html: experience.summary || experience.description }}
+                        suppressHydrationWarning
+                      />
 
                       <div className="reveal-text flex flex-wrap items-center gap-4 sm:gap-6">
                         <span className="border border-white/20 bg-white/5 backdrop-blur-md text-white px-4 py-1.5 rounded-full font-mono text-[11px] tracking-wider uppercase">

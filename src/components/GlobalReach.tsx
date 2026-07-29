@@ -360,7 +360,7 @@ export default function GlobalReach({ experiences = [] }: GlobalReachProps) {
               </div>
 
               {chapter.scenes.map((scene, sIdx) => {
-                const displayImages = [scene.coverPhoto || scene.image, ...(scene.galleryImages || [])].filter(Boolean) as string[];
+                const displayImages = [scene.coverPhoto || scene.image, ...(scene.galleryImages || [])].filter(Boolean).slice(0, 5) as string[];
 
                 if (displayImages.length === 0) {
                   displayImages.push('https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1200&q=80');

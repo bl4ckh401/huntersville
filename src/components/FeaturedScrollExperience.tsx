@@ -30,7 +30,8 @@ export default function FeaturedScrollExperience({ experiences }: { experiences:
       }, 0);
 
       // Allocating a massive 4,000px of physical vertical scroll height per asset
-      const totalScrollDistance = totalImagesCount * 4000;
+      const pxPerAsset = window.innerWidth < 768 ? 1200 : window.innerWidth < 1024 ? 2000 : 2800;
+      const totalScrollDistance = totalImagesCount * pxPerAsset;
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -219,7 +220,7 @@ export default function FeaturedScrollExperience({ experiences }: { experiences:
             ].filter(Boolean);
 
             const fallback = 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1200&q=80';
-            const displayImages = images.length > 0 ? images : [fallback];
+            const displayImages = images.slice(0, 5);
 
             return (
               <div key={experience.id} className="exp-panel absolute inset-0 w-full h-full pt-[72px] flex items-center justify-center bg-transparent">

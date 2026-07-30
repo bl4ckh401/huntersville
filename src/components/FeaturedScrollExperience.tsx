@@ -245,7 +245,7 @@ export default function FeaturedScrollExperience({ experiences }: { experiences:
 
                   {/* Editorial Text Decks */}
                   <div className="absolute inset-0 z-20 flex flex-col justify-end pb-12 md:pb-16 px-10 md:px-20 max-w-[1400px] mx-auto w-full">
-                    <div className="max-w-3xl">
+                     <div className="max-w-3xl" suppressHydrationWarning>
 
                       <div className="reveal-text flex items-center gap-2 text-white/70 font-mono text-xs uppercase tracking-widest mb-4">
                         <span className="material-symbols-outlined text-[16px] text-white/80">location_on</span>
@@ -265,7 +265,7 @@ export default function FeaturedScrollExperience({ experiences }: { experiences:
                         suppressHydrationWarning
                       />
 
-                      <div className="reveal-text flex flex-wrap items-center gap-4 sm:gap-6">
+                       <div className="reveal-text flex flex-wrap items-center gap-4 sm:gap-6" suppressHydrationWarning>
                         <span className="border border-white/20 bg-white/5 backdrop-blur-md text-white px-4 py-1.5 rounded-full font-mono text-[11px] tracking-wider uppercase">
                           {experience.category}
                         </span>

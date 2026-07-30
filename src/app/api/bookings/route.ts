@@ -1,10 +1,14 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { createBooking, getBookings } from '@/lib/content-store';
+
+const GUIDE_WHATSAPP = '254720447239';
+
+function encodeWhatsAppText(text: string): string {
+  return encodeURIComponent(text);
+}
 
 export async function GET() {
-  const bookings = await getBookings();
-  return NextResponse.json(bookings);
+  return NextResponse.json({ message: 'Bookings are handled via WhatsApp.' }, { status: 200 });
 }
 
 export async function POST(request: Request) {
@@ -21,12 +25,30 @@ export async function POST(request: Request) {
     }
   }
 
-  const booking = await createBooking({
-    ...body,
-    travelerName: body.travelerName || sessionUser?.name || 'Guest traveler',
-    travelerEmail: body.travelerEmail || sessionUser?.email || 'guest@example.com',
-    userId: sessionUser?.userId,
-  });
+  const travelerName = body.travelerName || sessionUser?.name || 'Guest traveler';
+  const travelerEmail = body.travelerEmail || sessionUser?.email || 'guest@example.com';
+  const travelerPhone = body.travelerPhone || 'Not provided';
+  const experienceId = body.experienceId || 'N/A';
+  const date = body.date || 'Not specified';
+  const amount = body.amount || 'N/A';
+  const guestCount = body.guestCount ?? 'N/A';
+  const travelers = Array.isArray(body.travelers) ? body.travelers : [];
+  const paymentMethod = body.paymentMethod || 'Not specified';
+  const status = body.status || 'Pending';
+  const userId = sessionUser?.userId || 'guest';
 
-  return NextResponse.json(booking, { status: 201 });
+  const travelerDetails = travelers
+    .map((t: { name?: string; age?: string; type?: string }, idx: number) => {
+      const name = t.name?.trim() || 'Not provided';
+      const age = t.age?.trim() || 'N/A';
+      const type = t.type?.trim() || 'N/A';
+      return `Traveler ${idx + 1}: ${name}, Age: ${age}, Type: ${type}`;
+    })
+    .join('\n');
+
+  const message = `New Booking Request\n\nGuest: ${travelerName}\nEmail: ${travelerEmail}\nPhone: ${travelerPhone}\nUser ID: ${userId}\nExperience ID: ${experienceId}\nDate: ${date}\nTotal Amount: ${amount}\nGuests: ${guestCount}\nPayment Method: ${paymentMethod}\nStatus: ${status}\n\nTraveler Details:\n${travelerDetails || 'No additional traveler details'}`;
+
+  const whatsappUrl = `https://wa.me/${GUIDE_WHATSAPP}?text=${encodeWhatsAppText(message)}`;
+
+  return NextResponse.json({ whatsappUrl, message });
 }

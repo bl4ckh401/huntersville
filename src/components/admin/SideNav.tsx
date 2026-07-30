@@ -14,7 +14,6 @@ export default function SideNav({ isOpen, onClose }: SideNavProps) {
   const navItems = [
     { name: 'Dashboard', icon: 'dashboard', href: '/admin' },
     { name: 'Experiences', icon: 'flight', href: '/admin/experiences' },
-    { name: 'Bookings', icon: 'event_available', href: '/admin/bookings' },
     { name: 'Travelers', icon: 'group', href: '/admin/travelers' },
   ];
 

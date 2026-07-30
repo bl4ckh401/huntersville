@@ -222,26 +222,32 @@ export default function GlobalReach({ experiences = [] }: GlobalReachProps) {
             }
           });
 
-          if (textGroup) {
-            masterTimeline.to(
-              textGroup,
-              { opacity: 0, y: -18, duration: SCENE_TEXT_OUT, ease: 'power2.inOut' },
-              Math.max(currentTime - SCENE_TEXT_OUT, chapterStart)
-            );
+          // Check if this is the absolute final scene of the entire scroll block
+          const isAbsoluteLastScene = (cIdx === journeyChapters.length - 1) && (sIdx === chapterScenes.length - 1);
+
+          // ONLY fade out the text and panel if it's NOT the last scene
+          if (!isAbsoluteLastScene) {
+            if (textGroup) {
+              masterTimeline.to(
+                textGroup,
+                { opacity: 0, y: -18, duration: SCENE_TEXT_OUT, ease: 'power2.inOut' },
+                Math.max(currentTime - SCENE_TEXT_OUT, chapterStart)
+              );
+            }
+
+            if (panel) {
+              masterTimeline.to(
+                panel,
+                { opacity: 0, duration: SCENE_TEXT_OUT, ease: 'power2.inOut' },
+                Math.max(currentTime - CHAPTER_OVERLAP, chapterStart)
+              );
+            }
           }
 
           if (sIdx < chapterScenes.length - 1) {
             masterTimeline.to(
               q(`.scene-r${cIdx}-s${sIdx + 1}`),
               { opacity: 1, duration: SCENE_TEXT_OUT, ease: 'power2.out' },
-              Math.max(currentTime - CHAPTER_OVERLAP, chapterStart)
-            );
-          }
-
-          if (panel) {
-            masterTimeline.to(
-              panel,
-              { opacity: 0, duration: SCENE_TEXT_OUT, ease: 'power2.inOut' },
               Math.max(currentTime - CHAPTER_OVERLAP, chapterStart)
             );
           }
@@ -262,9 +268,10 @@ export default function GlobalReach({ experiences = [] }: GlobalReachProps) {
         );
       });
 
+      const totalDuration = masterTimeline.duration();
       const scrollDistance = Math.max(
-        masterTimeline.duration() * window.innerHeight * 0.95,
-        window.innerHeight * 3.25
+        totalDuration * window.innerHeight * 0.35,
+        window.innerHeight * 1.2
       );
 
       trigger = ScrollTrigger.create({
@@ -274,7 +281,7 @@ export default function GlobalReach({ experiences = [] }: GlobalReachProps) {
         end: () => `+=${Math.round(scrollDistance)}`,
         scrub: 0.6,
         pin: pinRef.current,
-        pinSpacing: true,
+        pinSpacing: false,
         anticipatePin: 1,
         fastScrollEnd: true,
         invalidateOnRefresh: true,
@@ -297,8 +304,8 @@ export default function GlobalReach({ experiences = [] }: GlobalReachProps) {
   if (journeyChapters.length === 0) return null;
 
   return (
-    <section ref={sectionRef} className="relative z-20 w-full overflow-x-hidden bg-black text-foreground">
-      <div ref={pinRef} className="relative h-screen w-full overflow-hidden bg-black font-sans text-foreground">
+    <section ref={sectionRef} className="relative z-20 w-full overflow-x-hidden bg-background text-foreground">
+      <div ref={pinRef} className="relative h-screen w-full overflow-hidden bg-background font-sans text-foreground">
         <div className="absolute left-1/2 top-[80px] z-50 flex -translate-x-1/2 select-none gap-2 sm:gap-4 mix-blend-difference">
           {journeyChapters.map((chapter, idx) => (
             <div
@@ -322,26 +329,11 @@ export default function GlobalReach({ experiences = [] }: GlobalReachProps) {
           ))}
         </div>
 
-        <div className="absolute left-8 top-1/2 z-50 hidden h-[30vh] w-6 -translate-y-1/2 flex-col items-center opacity-80 mix-blend-difference sm:flex md:left-12">
-          <span className="absolute -top-16 mb-4 origin-center -rotate-90 font-mono text-[9px] uppercase tracking-[0.3em] text-foreground/50">
-            Africa
-          </span>
-          <div className="relative flex h-full w-[1px] flex-col items-center justify-between bg-white/20">
-            <div
-              className="map-active-dot absolute left-1/2 z-20 h-2 w-2 -translate-x-1/2 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]"
-              style={{ top: '0%' }}
-            />
-            {journeyChapters.map((_, i) => (
-              <div key={i} className="z-10 h-1.5 w-1.5 rounded-full bg-white/40" />
-            ))}
-          </div>
-        </div>
-
         <div className="absolute inset-0 h-full w-full">
           {journeyChapters.map((chapter, cIdx) => (
             <div key={chapter.name} className="pointer-events-none absolute inset-0 h-full w-full">
               <div
-                className={`chapter-intro chapter-intro-${cIdx} absolute inset-0 z-40 flex flex-col items-center justify-center bg-black px-6 text-center`}
+                className={`chapter-intro chapter-intro-${cIdx} absolute inset-0 z-40 flex flex-col items-center justify-center bg-background px-6 text-center`}
               >
                 <div className="mb-10 h-[1px] w-full max-w-sm bg-white/20" />
                 <h2 className="mb-6 font-serif text-5xl font-bold uppercase tracking-tight md:text-8xl" style={{ color: chapter.color }}>

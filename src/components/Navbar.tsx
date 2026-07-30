@@ -2,34 +2,9 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [user, setUser] = useState<{ name?: string; role?: string } | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function loadUser() {
-      try {
-        const response = await fetch('/api/auth/me');
-        const data = await response.json();
-        setUser(data.user);
-      } catch {
-        setUser(null);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadUser();
-  }, []);
-
-  async function handleLogout() {
-    await fetch('/api/auth/logout', { method: 'POST' });
-    setUser(null);
-    window.location.href = '/';
-  }
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-gutter py-4 bg-surface/80 backdrop-blur-md shadow-sm transition-all duration-300">
@@ -57,26 +32,9 @@ export default function Navbar() {
           </ul>
         </div>
         <div className="flex items-center gap-sm">
-          {/* Search Icon for Mobile */}
           <button className="md:hidden text-on-surface-variant p-2 rounded-full hover:bg-surface-container-low transition-colors">
             <span className="material-symbols-outlined">search</span>
           </button>
-          {loading ? (
-            <div className="h-9 w-20 animate-pulse rounded-full bg-outline-variant/30" />
-          ) : user ? (
-            <div className="flex items-center gap-sm">
-              <Link href={user.role === 'admin' ? '/admin' : '/explore'} className="bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded-full hover:shadow-md hover:scale-101 active:scale-95 transition-all shadow-[0_2px_0_rgba(0,0,0,0.1)]">
-                {user.name}
-              </Link>
-              <button onClick={handleLogout} className="text-on-surface-variant font-label-sm text-label-sm hover:text-primary transition-colors px-2 py-1">
-                Logout
-              </button>
-            </div>
-          ) : (
-            <Link href="/login" className="bg-primary text-on-primary font-label-md text-label-md px-4 py-2 rounded-full hover:shadow-md hover:scale-101 active:scale-95 transition-all shadow-[0_2px_0_rgba(0,0,0,0.1)]">
-              Login
-            </Link>
-          )}
         </div>
       </div>
     </nav>

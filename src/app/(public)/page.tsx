@@ -5,12 +5,12 @@ import GlobalReach from '@/components/GlobalReach';
 import FeaturedScrollExperience from '@/components/FeaturedScrollExperience';
 import Testimonials from '@/components/Testimonials';
 import Philosophy from '@/components/Philosophy';
-import { getExperiences } from '@/lib/content-store';
+import { getExperiences, getReviews } from '@/lib/content-store';
 
 export default async function Home() {
   const allExperiences = await getExperiences();
-  
-  // Only restrict the featured section
+  const reviews = await getReviews();
+
   const featuredExperiences = allExperiences.slice(0, 3);
 
   return (
@@ -22,15 +22,13 @@ export default async function Home() {
 
         <div className="h-32 w-full bg-background" />
         
-        {/* Pass the restricted array here */}
         <FeaturedScrollExperience experiences={featuredExperiences} />
 
-        {/* Pass the FULL array here so the cinematic chapters actually work */}
         <GlobalReach experiences={allExperiences} />
 
         <div className="h-16 w-full bg-background" />
 
-        <Testimonials />
+        <Testimonials reviews={reviews} />
       </div>
     </main>
   );

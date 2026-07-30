@@ -21,12 +21,6 @@ interface QuickFact {
   value: string;
 }
 
-interface TravelerInfo {
-  name: string;
-  age: string;
-  type: 'adult' | 'child' | 'senior' | 'infant';
-}
-
 interface BookingSidebarProps {
   experienceId: string;
   price: string;
@@ -55,41 +49,9 @@ export default function BookingSidebar({
   const [travelerEmail, setTravelerEmail] = useState('');
   const [travelerPhone, setTravelerPhone] = useState('');
   const [date, setDate] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState('Card');
+  const [guestCount, setGuestCount] = useState(1);
   const [message, setMessage] = useState('');
   const [isSaving, setIsSaving] = useState(false);
-
-  const [adults, setAdults] = useState(1);
-  const [children, setChildren] = useState(0);
-  const [seniors, setSeniors] = useState(0);
-  const [infants, setInfants] = useState(0);
-
-  const [travelers, setTravelers] = useState<TravelerInfo[]>([]);
-
-  useEffect(() => {
-    setTravelers((prev) => {
-      const next: TravelerInfo[] = [];
-      let prevIndex = 0;
-
-      const addTravelers = (count: number, type: TravelerInfo['type']) => {
-        for (let i = 0; i < count; i++) {
-          if (prev[prevIndex]?.type === type) {
-            next.push(prev[prevIndex]);
-          } else {
-            next.push({ name: '', age: '', type });
-          }
-          prevIndex++;
-        }
-      };
-
-      addTravelers(adults, 'adult');
-      addTravelers(children, 'child');
-      addTravelers(seniors, 'senior');
-      addTravelers(infants, 'infant');
-
-      return next;
-    });
-  }, [adults, children, seniors, infants]);
 
   useEffect(() => {
     async function loadProfile() {
@@ -108,14 +70,6 @@ export default function BookingSidebar({
     loadProfile();
   }, []);
 
-  function updateTraveler(index: number, field: keyof TravelerInfo, value: string) {
-    setTravelers((current) => {
-      const next = [...current];
-      next[index] = { ...next[index], [field]: value };
-      return next;
-    });
-  }
-
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsSaving(true);
@@ -131,49 +85,33 @@ export default function BookingSidebar({
         experienceId,
         date,
         amount: `$${total.toFixed(2)}`,
-        guestCount: totalGuests,
-        travelers,
-        paymentMethod,
+        guestCount,
+        paymentMethod: 'WhatsApp',
         status: 'Pending',
       }),
     });
 
     if (response.ok) {
       const data = await response.json();
-      const params = new URLSearchParams({
-        bookingId: data.id || 'N/A',
-        amount: `$${total.toFixed(2)}`,
-        guests: String(totalGuests),
-        date: date || '',
-      });
-      window.location.href = `/booking-confirmed?${params.toString()}`;
+      if (data.whatsappUrl) {
+        window.location.href = data.whatsappUrl;
+      } else {
+        setMessage('Could not initiate WhatsApp booking.');
+        setIsSaving(false);
+      }
     } else {
       setMessage('Could not save the booking right now.');
       setIsSaving(false);
     }
   }
 
-  const priceRows = [
-    { label: 'Adult', value: pricing?.adultPrice },
-    { label: 'Child', value: pricing?.childPrice },
-    { label: 'Senior', value: pricing?.seniorPrice },
-    { label: 'Infant', value: pricing?.infantPrice },
-    { label: 'Private group', value: pricing?.privateGroupPrice },
-  ].filter((row) => row.value && row.value.trim());
-
-  const adultPrice = parsePrice(pricing?.adultPrice);
-  const childPrice = parsePrice(pricing?.childPrice);
-  const seniorPrice = parsePrice(pricing?.seniorPrice);
-  const infantPrice = parsePrice(pricing?.infantPrice);
-
-  const baseTotal = adults * adultPrice + children * childPrice + seniors * seniorPrice + infants * infantPrice;
+  const adultPrice = parsePrice(pricing?.adultPrice || price);
   const serviceFee = pricing?.serviceFees ? parsePrice(pricing.serviceFees) : 0;
   const taxRate = pricing?.taxesIncluded?.toLowerCase() === 'yes' ? 0 : 0.15;
+  const baseTotal = guestCount * adultPrice;
   const taxAmount = baseTotal * taxRate;
   const discount = pricing?.discounts ? parsePrice(pricing.discounts) : 0;
   const total = Math.max(0, baseTotal + serviceFee + taxAmount - discount);
-
-  const totalGuests = adults + children + seniors + infants;
 
   return (
     <div className="rounded-2xl border border-outline-variant/20 bg-surface-container-lowest p-5 custom-shadow-card sm:p-6 lg:sticky lg:top-[100px]">
@@ -198,23 +136,6 @@ export default function BookingSidebar({
         ) : null}
       </div>
 
-      {priceRows.length ? (
-        <div className="mb-md space-y-1 rounded-xl bg-surface-container-low px-sm py-sm">
-          {priceRows.map((row) => (
-            <div key={row.label} className="flex items-center justify-between font-body-sm text-body-sm">
-              <span className="text-on-surface-variant">{row.label}</span>
-              <span className="font-medium text-on-surface">{row.value}</span>
-            </div>
-          ))}
-          {pricing?.discounts ? (
-            <div className="flex items-center justify-between font-body-sm text-body-sm text-primary">
-              <span>Discount</span>
-              <span className="font-medium">{pricing.discounts}</span>
-            </div>
-          ) : null}
-        </div>
-      ) : null}
-
       {quickFacts.length ? (
         <div className="mb-md grid grid-cols-2 gap-sm">
           {quickFacts.map((fact) => (
@@ -231,7 +152,7 @@ export default function BookingSidebar({
 
       <hr className="mb-md border-outline-variant/30" />
 
-      <form onSubmit={handleSubmit} className="mb-md space-y-sm">
+      <form onSubmit={handleSubmit} className="space-y-sm">
         <div>
           <label className="mb-xs block font-label-sm text-label-sm text-on-surface-variant">Full name</label>
           <input value={travelerName} onChange={(event) => setTravelerName(event.target.value)} required className="w-full rounded-lg border border-outline-variant/50 bg-surface px-sm py-sm text-sm" placeholder="Your name" />
@@ -247,68 +168,20 @@ export default function BookingSidebar({
           <input value={travelerPhone} onChange={(event) => setTravelerPhone(event.target.value)} className="w-full rounded-lg border border-outline-variant/50 bg-surface px-sm py-sm text-sm" placeholder="+255..." />
         </div>
 
-        <div>
-          <label className="mb-xs block font-label-sm text-label-sm text-on-surface-variant">Preferred date</label>
-          <input value={date} onChange={(event) => setDate(event.target.value)} type="date" required className="w-full rounded-lg border border-outline-variant/50 bg-surface px-sm py-sm text-sm" />
-        </div>
-
         <div className="grid grid-cols-2 gap-sm">
           <div>
-            <label className="mb-xs block font-label-sm text-label-sm text-on-surface-variant">Adults</label>
-            <input value={adults} onChange={(event) => setAdults(Math.max(0, parseInt(event.target.value) || 0))} type="number" min="0" className="w-full rounded-lg border border-outline-variant/50 bg-surface px-sm py-sm text-sm" />
+            <label className="mb-xs block font-label-sm text-label-sm text-on-surface-variant">Preferred date</label>
+            <input value={date} onChange={(event) => setDate(event.target.value)} type="date" required className="w-full rounded-lg border border-outline-variant/50 bg-surface px-sm py-sm text-sm" />
           </div>
           <div>
-            <label className="mb-xs block font-label-sm text-label-sm text-on-surface-variant">Children</label>
-            <input value={children} onChange={(event) => setChildren(Math.max(0, parseInt(event.target.value) || 0))} type="number" min="0" className="w-full rounded-lg border border-outline-variant/50 bg-surface px-sm py-sm text-sm" />
+            <label className="mb-xs block font-label-sm text-label-sm text-on-surface-variant">Guests</label>
+            <input value={guestCount} onChange={(event) => setGuestCount(Math.max(1, parseInt(event.target.value) || 1))} type="number" min="1" className="w-full rounded-lg border border-outline-variant/50 bg-surface px-sm py-sm text-sm" />
           </div>
         </div>
-
-        <div className="grid grid-cols-2 gap-sm">
-          <div>
-            <label className="mb-xs block font-label-sm text-label-sm text-on-surface-variant">Seniors</label>
-            <input value={seniors} onChange={(event) => setSeniors(Math.max(0, parseInt(event.target.value) || 0))} type="number" min="0" className="w-full rounded-lg border border-outline-variant/50 bg-surface px-sm py-sm text-sm" />
-          </div>
-          <div>
-            <label className="mb-xs block font-label-sm text-label-sm text-on-surface-variant">Infants</label>
-            <input value={infants} onChange={(event) => setInfants(Math.max(0, parseInt(event.target.value) || 0))} type="number" min="0" className="w-full rounded-lg border border-outline-variant/50 bg-surface px-sm py-sm text-sm" />
-          </div>
-        </div>
-
-        {totalGuests > 0 && travelers.length > 0 ? (
-          <div className="space-y-sm">
-            <p className="font-label-sm text-label-sm text-on-surface-variant">Traveler details</p>
-            {travelers.map((traveler, index) => (
-              <div key={index} className="grid grid-cols-[1fr_100px] gap-sm">
-                <div>
-                  <label className="mb-xs block font-label-sm text-label-sm text-on-surface-variant">Name {index + 1}</label>
-                  <input
-                    value={traveler.name}
-                    onChange={(event) => updateTraveler(index, 'name', event.target.value)}
-                    required
-                    className="w-full rounded-lg border border-outline-variant/50 bg-surface px-sm py-sm text-sm"
-                    placeholder={`Traveler ${index + 1} name`}
-                  />
-                </div>
-                <div>
-                  <label className="mb-xs block font-label-sm text-label-sm text-on-surface-variant">Age</label>
-                  <input
-                    value={traveler.age}
-                    onChange={(event) => updateTraveler(index, 'age', event.target.value)}
-                    required
-                    type="number"
-                    min="0"
-                    className="w-full rounded-lg border border-outline-variant/50 bg-surface px-sm py-sm text-sm"
-                    placeholder="Age"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : null}
 
         <div className="rounded-xl border border-outline-variant/40 bg-surface-container-low p-sm">
           <div className="flex items-center justify-between font-body-sm text-body-sm">
-            <span className="text-on-surface-variant">Subtotal ({totalGuests} guest{totalGuests === 1 ? '' : 's'})</span>
+            <span className="text-on-surface-variant">Subtotal ({guestCount} guest{guestCount === 1 ? '' : 's'})</span>
             <span className="font-medium text-on-surface">${baseTotal.toFixed(2)}</span>
           </div>
           {serviceFee > 0 ? (
@@ -335,24 +208,11 @@ export default function BookingSidebar({
           </div>
         </div>
 
-        <div>
-          <label className="mb-xs block font-label-sm text-label-sm text-on-surface-variant">Payment method</label>
-          <select value={paymentMethod} onChange={(event) => setPaymentMethod(event.target.value)} className="w-full rounded-lg border border-outline-variant/50 bg-surface px-sm py-sm text-sm">
-            <option value="Card">Credit Card</option>
-            <option value="M-Pesa">M-Pesa</option>
-            <option value="Bank Transfer">Bank Transfer</option>
-          </select>
-        </div>
-
-        <button type="submit" disabled={isSaving || totalGuests === 0} className="flex w-full items-center justify-center gap-xs rounded-lg bg-amber-500 py-3 font-label-md text-label-md text-white shadow-sm hover:bg-amber-600 active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-70">
+        <button type="submit" disabled={isSaving} className="flex w-full items-center justify-center gap-xs rounded-lg bg-amber-500 py-3 font-label-md text-label-md text-white shadow-sm hover:bg-amber-600 active:translate-y-[2px] active:shadow-none transition-all disabled:opacity-70">
           {isSaving ? 'Saving...' : `Confirm Booking — $${total.toFixed(2)}`}
         </button>
         {message && <p className={`text-sm ${message.includes('✓') ? 'text-primary' : 'text-error'}`}>{message}</p>}
       </form>
-
-      <button className="mb-md flex w-full items-center justify-center gap-xs rounded-lg border border-primary/30 bg-surface py-3 font-label-md text-label-md text-primary transition-colors hover:bg-primary-container/10">
-        <span className="material-symbols-outlined text-[18px]">add_circle</span> Add to Journey
-      </button>
 
       <div className="flex flex-wrap items-center justify-center gap-x-sm gap-y-1 text-center font-label-sm text-label-sm text-on-surface-variant">
         <span className="flex items-center gap-xs">

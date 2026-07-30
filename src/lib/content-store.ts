@@ -361,6 +361,11 @@ function listUsers(): User[] {
   return rows.map((row) => ({ ...row }));
 }
 
+function listReviews(): Review[] {
+  const rows = getDb().prepare('SELECT id, experienceId, userId, userName, rating, title, comment, createdAt FROM reviews ORDER BY createdAt DESC').all() as Array<Review>;
+  return rows;
+}
+
 function listReviewsForExperience(experienceId: string): Review[] {
   const rows = getDb().prepare('SELECT id, experienceId, userId, userName, rating, title, comment, createdAt FROM reviews WHERE experienceId = ? ORDER BY createdAt DESC').all(experienceId) as Array<Review>;
   return rows;
@@ -722,6 +727,12 @@ export async function createReview(input: Record<string, unknown>): Promise<Revi
   return review;
 }
 
+export async function getReviews(): Promise<Review[]> {
+  return listReviews()
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .slice(0, 20);
+}
+
 export async function getReviewsForExperience(experienceId: string): Promise<Review[]> {
   return listReviewsForExperience(experienceId);
 }
@@ -745,9 +756,9 @@ export async function canUserReviewExperience(userId: string, experienceId: stri
     return false;
   }
 
-  const booking = getDb().prepare('SELECT data FROM bookings WHERE experienceId = ?').all(experienceId) as Array<{ data: string }>;
-  return booking.some((row) => {
-    const parsed = JSON.parse(row.data) as Booking;
-    return parsed.userId === userId && ['Confirmed', 'Paid'].includes(parsed.status);
+  const allBookings = listBookings();
+  return allBookings.some((row) => {
+    const parsed = row as unknown as Booking;
+    return parsed.experienceId === experienceId && parsed.userId === userId && ['Confirmed', 'Paid'].includes(parsed.status);
   });
 }

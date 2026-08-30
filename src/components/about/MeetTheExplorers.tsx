@@ -3,22 +3,22 @@ import Image from "next/image";
 const team = [
   {
     name: 'Jimmy Lee',
-    role: 'Co-Founder',
-    bio: 'Pioneering luxury eco-tourism with a lifelong dedication to preserving Kenya\'s heritage.',
+    role: 'Co-Founder/CEO',
+    bio: 'Pioneering luxury tourism with a lifelong dedication to preserving Kenya\'s heritage.',
     image: '/lee.jpeg',
     delay: 0,
   },
   {
     name: 'Godwin Kiprono',
-    role: 'Co-Founder',
-    bio: 'Leading our community and wildlife initiatives to ensure a sustainable footprint.',
+    role: 'Co-Founder/Investor',
+    bio: 'A visionary investor and co-founder, committed to driving innovation in the tourism industry.',
     image: '/gkk.jpeg',
     delay: 100,
   },
   {
     name: 'Pavin Kiptoo',
     role: 'Developer',
-    bio: 'A master tracker whose intimate knowledge of the Mara brings every safari to life.',
+    bio: 'A tech enthusiast and developer, passionate about creating seamless digital experiences for travelers.',
     image: '/pkk.jpg',
     delay: 200,
   },

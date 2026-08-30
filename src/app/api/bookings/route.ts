@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 
-const GUIDE_WHATSAPP = '254720447239';
+const GUIDE_WHATSAPP = '254 723388905';
 
 function encodeWhatsAppText(text: string): string {
   return encodeURIComponent(text);

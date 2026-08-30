@@ -7,6 +7,7 @@ const team = [
     bio: 'Pioneering luxury tourism with a lifelong dedication to preserving Kenya\'s heritage.',
     image: '/lee.jpeg',
     delay: 0,
+    objectPosition: '50% 20%',
   },
   {
     name: 'Godwin Kiprono',
@@ -14,6 +15,7 @@ const team = [
     bio: 'A visionary investor and co-founder, committed to driving innovation in the tourism industry.',
     image: '/gkk.jpeg',
     delay: 100,
+    objectPosition: 'center',
   },
   {
     name: 'Pavin Kiptoo',
@@ -21,6 +23,7 @@ const team = [
     bio: 'A tech enthusiast and developer, passionate about creating seamless digital experiences for travelers.',
     image: '/pkk.jpg',
     delay: 200,
+    objectPosition: 'center',
   },
 ];
 
@@ -46,15 +49,16 @@ export default function MeetTheExplorers() {
               style={{ transitionDelay: `${member.delay}ms` }}
             >
               {/* Portrait */}
-              <div className="w-40 h-40 md:w-48 md:h-48 mx-auto rounded-full overflow-hidden mb-6 shadow-lg group-hover:shadow-2xl transition-shadow duration-300 relative">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
+              <div className="w-40 h-40 md:w-52 md:h-52 mx-auto rounded-full overflow-hidden mb-6 shadow-lg group-hover:shadow-2xl transition-shadow duration-300 relative">
                 <Image
                   alt={member.name}
-                  width={1080}
-                  height={1920}
-                  className="w-full h-full object-cover transition-all duration-500"
+                  fill
+                  sizes="(max-width: 768px) 160px, 208px"
+                  className="object-cover transition-all duration-500"
+                  style={{ objectPosition: member.objectPosition }}
                   src={member.image}
                 />
+
                 <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full" />
               </div>
 

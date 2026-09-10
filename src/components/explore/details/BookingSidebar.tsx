@@ -53,6 +53,7 @@ export default function BookingSidebar({
   const [message, setMessage] = useState('');
   const [paymentTab, setPaymentTab] = useState<'wire' | 'card'>('wire');
   const [copiedLabel, setCopiedLabel] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
 
   const copyToClipboard = (text: string, label: string) => {
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
@@ -291,38 +292,85 @@ export default function BookingSidebar({
               </div>
               <div className="pt-1 text-[11px] text-on-surface-variant leading-tight flex items-start gap-1">
                 <span className="material-symbols-outlined text-[14px] text-primary mt-0.5">info</span>
-                <span className="">Use your <strong>Booking Ref</strong> or Full Name as reference. Confirmation verified within 12–24h.</span>
+                <span>Use your <strong>Booking Ref</strong> or Full Name as reference. Confirmation verified within 12–24h.</span>
               </div>
             </div>
             
             <div className="flex gap-xs">
-              <button type="button" className="flex-1 bg-surface border border-outline-variant/40 hover:bg-surface-container py-1.5 px-2 rounded-DEFAULT text-[11px] font-label-md text-on-surface flex items-center justify-center gap-1 transition-colors">
-                <span className="material-symbols-outlined text-[14px]">content_copy</span> Copy Details
+              <button 
+                type="button" 
+                onClick={() => copyToClipboard('Bank: Standard Chartered Bank\nAccount Name: HuntersVille Tours Ltd\nAccount No: 0102049281001\nSWIFT: SCBLKENX\nBranch: Westlands Premier, Nairobi', 'Wire')}
+                className="flex-1 bg-surface border border-outline-variant/40 hover:bg-surface-container py-1.5 px-2 rounded-DEFAULT text-[11px] font-label-md text-on-surface flex items-center justify-center gap-1 transition-colors"
+              >
+                <span className="material-symbols-outlined text-[14px]">{copiedLabel === 'Wire' ? 'check' : 'content_copy'}</span> 
+                {copiedLabel === 'Wire' ? 'Copied!' : 'Copy Wire Details'}
               </button>
-              <button type="button" className="flex-1 bg-surface border border-outline-variant/40 hover:bg-surface-container py-1.5 px-2 rounded-DEFAULT text-[11px] font-label-md text-primary flex items-center justify-center gap-1 transition-colors">
+              <a 
+                href="https://wa.me/254723388905?text=Hello%20HuntersVille%2C%20I%20would%20like%20to%20request%20the%20Wire%20PDF%20Guide"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 bg-surface border border-outline-variant/40 hover:bg-surface-container py-1.5 px-2 rounded-DEFAULT text-[11px] font-label-md text-primary flex items-center justify-center gap-1 transition-colors"
+              >
                 <span className="material-symbols-outlined text-[14px]">download</span> Wire PDF Guide
-              </button>
+              </a>
             </div>
           </>
         ) : (
-          <div className="p-sm bg-surface-container-low rounded-lg border border-outline-variant/40 text-[12px] space-y-sm">
-            <div className="flex items-center gap-sm">
-              <div className="p-2 bg-primary/10 rounded-full text-primary">
-                <span className="material-symbols-outlined text-[20px]">credit_card</span>
+          <>
+            <div className="p-sm bg-surface-container-low rounded-lg border border-outline-variant/40 text-[12px] space-y-xs">
+              <div className="flex justify-between items-center pb-1 border-b border-outline-variant/20">
+                <span className="text-on-surface-variant">Merchant:</span>
+                <span className="font-semibold text-on-surface">HuntersVille Tours Ltd</span>
               </div>
-              <div>
-                <h5 className="font-semibold text-on-surface">Secure Online Payment</h5>
-                <p className="text-[11px] text-on-surface-variant">Pay instantly via Stripe or M-Pesa</p>
+              <div className="flex justify-between items-center pb-1 border-b border-outline-variant/20">
+                <span className="text-on-surface-variant">M-Pesa Paybill:</span>
+                <span className="font-mono font-bold text-green-700 dark:text-green-400">329329</span>
+              </div>
+              <div className="flex justify-between items-center pb-1 border-b border-outline-variant/20">
+                <span className="text-on-surface-variant">Account No:</span>
+                <span className="font-mono font-bold text-primary tracking-wide">0102049281001</span>
+              </div>
+              <div className="flex justify-between items-center pb-1 border-b border-outline-variant/20">
+                <span className="text-on-surface-variant">Buy Goods (Till):</span>
+                <span className="font-mono font-bold text-green-700 dark:text-green-400">5428901</span>
+              </div>
+              <div className="flex justify-between items-center pb-1 border-b border-outline-variant/20">
+                <span className="text-on-surface-variant">Agent Phone:</span>
+                <span className="font-mono text-on-surface">+254 723 388 905</span>
+              </div>
+              <div className="pt-1 text-[11px] text-on-surface-variant leading-tight flex items-start gap-1">
+                <span className="material-symbols-outlined text-[14px] text-green-600 mt-0.5">verified</span>
+                <span>Enter Amount in KES. Send M-Pesa SMS confirmation to <strong>+254 723 388 905</strong> for instant verification.</span>
               </div>
             </div>
-            <p className="text-on-surface-variant leading-snug">
-              Upon confirming your booking, you will receive a secure payment link via email to complete your transaction using Visa, Mastercard, Amex, or M-Pesa.
-            </p>
-            <div className="pt-2 flex items-center gap-2 border-t border-outline-variant/20">
-              <span className="material-symbols-outlined text-[16px] text-green-600">lock</span>
-              <span className="text-[11px] text-on-surface font-medium">256-bit SSL Encrypted</span>
+
+            <div className="flex gap-xs">
+              <button 
+                type="button" 
+                onClick={() => copyToClipboard('Lipa na M-Pesa\nPaybill: 329329\nAccount No: 0102049281001\nOr Buy Goods Till: 5428901\nName: HuntersVille Tours Ltd\nPhone: +254 723 388 905', 'M-Pesa')}
+                className="flex-1 bg-surface border border-outline-variant/40 hover:bg-surface-container py-1.5 px-2 rounded-DEFAULT text-[11px] font-label-md text-on-surface flex items-center justify-center gap-1 transition-colors"
+              >
+                <span className="material-symbols-outlined text-[14px]">{copiedLabel === 'M-Pesa' ? 'check' : 'content_copy'}</span> 
+                {copiedLabel === 'M-Pesa' ? 'Copied!' : 'Copy M-Pesa Info'}
+              </button>
+              <a 
+                href="https://wa.me/254723388905?text=Hello%20HuntersVille%2C%20I%20have%20sent%20an%20M-Pesa%20payment%20for%20my%20safari%20booking"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 bg-surface border border-outline-variant/40 hover:bg-surface-container py-1.5 px-2 rounded-DEFAULT text-[11px] font-label-md text-green-700 dark:text-green-400 flex items-center justify-center gap-1 transition-colors"
+              >
+                <span className="material-symbols-outlined text-[14px]">send</span> WhatsApp Confirm
+              </a>
             </div>
-          </div>
+
+            <div className="pt-1 flex items-center justify-between text-[11px] text-on-surface-variant border-t border-outline-variant/20">
+              <span className="flex items-center gap-1">
+                <span className="material-symbols-outlined text-[14px] text-primary">credit_card</span>
+                Visa / Mastercard / Amex link sent upon request
+              </span>
+              <span className="font-semibold text-green-600">Instant</span>
+            </div>
+          </>
         )}
       </div>
 

@@ -25,6 +25,11 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
+              <Link className={`${pathname === '/gallery' ? 'text-primary font-bold border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'} transition-all duration-200 py-1 px-2 rounded`} href="/gallery">
+                Gallery
+              </Link>
+            </li>
+            <li>
               <Link className={`${pathname === '/about' ? 'text-primary font-bold border-b-2 border-primary' : 'text-on-surface-variant hover:text-primary'} transition-all duration-200 py-1 px-2 rounded`} href="/about">
                 About HuntersVille
               </Link>

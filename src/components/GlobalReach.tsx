@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import type { Experience } from '@/lib/content-store';
+import { sanitizeTipTapHTML } from '@/lib/sanitize-tiptap-html';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -281,15 +282,14 @@ export default function GlobalReach({ experiences = [] }: GlobalReachProps) {
         end: () => `+=${Math.round(scrollDistance)}`,
         scrub: 0.6,
         pin: pinRef.current,
-        pinSpacing: false,
-        anticipatePin: 1,
+        pinSpacing: true,
         fastScrollEnd: true,
         invalidateOnRefresh: true,
-        refreshPriority: 5,
         animation: masterTimeline,
       });
 
       requestAnimationFrame(() => {
+        ScrollTrigger.sort();
         ScrollTrigger.refresh();
       });
     }, sectionRef);
@@ -391,7 +391,7 @@ export default function GlobalReach({ experiences = [] }: GlobalReachProps) {
                         <div className="flex flex-col justify-between gap-8 sm:flex-row sm:items-end">
                           <p
                             className="max-w-2xl font-sans text-base font-light leading-relaxed text-white/80 drop-shadow-md md:text-xl"
-                            dangerouslySetInnerHTML={{ __html: scene.summary || scene.description }}
+                            dangerouslySetInnerHTML={{ __html: sanitizeTipTapHTML(scene.summary || scene.description) }}
                           />
 
                           <Link

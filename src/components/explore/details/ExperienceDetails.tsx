@@ -1,4 +1,5 @@
 import type { Experience, Review } from '@/lib/content-store';
+import { stripHtml } from '@/lib/sanitize-tiptap-html';
 import TourHeader from './TourHeader';
 import Reviews from './Reviews';
 import {
@@ -163,7 +164,7 @@ export default function ExperienceDetails({ experience, reviews, average, review
         location={experience.location}
         rating={ratingLabel}
         reviewsCount={reviewsCount}
-        tagline={experience.tagline || experience.summary}
+         tagline={stripHtml(experience.tagline) || stripHtml(experience.summary || experience.description)}
         meta={meta}
         tags={headerTags}
       />

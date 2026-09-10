@@ -9,6 +9,7 @@ export default function BottomNav() {
   const links = [
     { href: '/', label: 'Home', icon: 'home', activeOn: ['/'] },
     { href: '/explore', label: 'Explore', icon: 'search', activeOn: ['/explore'] },
+    { href: '/gallery', label: 'Gallery', icon: 'photo_library', activeOn: ['/gallery'] },
     { href: '/about', label: 'About', icon: 'tour', activeOn: ['/about'] },
   ];
 

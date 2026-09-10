@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import ScrollObserver from "@/components/ScrollObserver";
+import FloatingActionButtons from "@/components/FloatingActionButtons";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -34,6 +35,7 @@ export default function RootLayout({
       <body className={`${playfair.variable} ${inter.variable} bg-background text-on-background font-body-md antialiased min-h-screen flex flex-col`}>
         <ScrollObserver />
         {children}
+        <FloatingActionButtons />
       </body>
     </html>
   );

@@ -98,7 +98,7 @@ export default function HomeScrollExperience() {
         breathing room. Keep this here so the boundary is guaranteed no
         matter what page.tsx does around this component.
       */}
-      <div className="h-32 w-full bg-background" />
+      {/* <div className="h-32 w-full bg-background" /> */}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 export default function Philosophy() {
   return (
-    <section className="max-w-container-max mx-auto px-gutter pt-lg pb-md scroll-reveal">
+    <section className="max-w-container-max mx-auto px-gutter py-xl">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-xl items-center">
         <div>
           <h2 className="font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-md">Our Philosophy</h2>
@@ -17,8 +17,13 @@ export default function Philosophy() {
         <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500">
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAuKdNTXWAc23rxSxyGsyShAxkN4GqhQFvfZWPsZ__1I6VygOn9rgEtr8aT3j1Pgih-NXvFyegBxQcuwGILmz7Ee_EYcTr7woUKMzFf36YGbyOe49G5Ah3YgUvSgMHXSHa_P-xlc4kdxUpLfP78cLOO6eMC2U6055OTaPWBfN2uC3-FrLO_iLcBVMPlleP1pWoDxiXabNjDRV3wiotY7S5Pqyx81f8huReV7LAWM-xePcSy7tj0qHOqIyaCUHtJqljgmkBzT74938w')" }}
+            style={{ backgroundImage: "url('/LeeTour.png')" }}
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          <div className="absolute bottom-6 left-6 right-6 text-white">
+            <p className="font-label-sm text-label-sm uppercase tracking-wider text-primary-fixed-dim">Profound experiences</p>
+            <p className="font-headline-sm text-headline-sm font-semibold">Experience Africa with the Best</p>
+          </div>
         </div>
       </div>
     </section>

@@ -147,6 +147,7 @@ export default function CoastalTimeline() {
         });
       }
 
+      ScrollTrigger.sort();
       ScrollTrigger.refresh();
     };
 

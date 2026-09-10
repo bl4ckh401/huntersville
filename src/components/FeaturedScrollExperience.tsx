@@ -5,6 +5,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Link from 'next/link';
 import type { Experience } from '@/lib/content-store';
+import { sanitizeTipTapHTML } from '@/lib/sanitize-tiptap-html';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -40,8 +41,7 @@ export default function FeaturedScrollExperience({ experiences }: { experiences:
           end: `+=${totalScrollDistance}px`,
           scrub: 2.2,
           pin: pinRef.current,
-          anticipatePin: 1,
-          refreshPriority: 10, // <--- 1. TELLS GSAP TO CALCULATE THIS FIRST
+          invalidateOnRefresh: true,
           snap: {
             snapTo: 'labels',
             duration: { min: 0.8, max: 1.5 },
@@ -161,6 +161,7 @@ export default function FeaturedScrollExperience({ experiences }: { experiences:
     }, sectionRef);
 
     const timeout = setTimeout(() => {
+      ScrollTrigger.sort();
       ScrollTrigger.refresh();
     }, 100);
 
@@ -186,11 +187,11 @@ export default function FeaturedScrollExperience({ experiences }: { experiences:
         pattern already used by GlobalReach's pinRef and by
         Coastal/SavannahTimeline's pinned <section> elements.
       */}
-      <div ref={pinRef} className="relative h-screen w-full overflow-hidden text-white pt-[72px] flex items-center justify-center bg-background">
+      <div ref={pinRef} className="relative h-screen w-full overflow-hidden text-white flex items-center justify-center bg-background">
 
         {/* Editorial Section context header — positioned under the navbar gap */}
-        <div className="section-header absolute top-[100px] left-10 md:left-24 z-50 mix-blend-difference pointer-events-none">
-          <h2 className=" tracking-[0.35em] font-display-lg text-display-lg-mobile md:text-display-lg text-primary mb-md">
+        <div className="section-header absolute top-[0px] left-10 md:left-24 z-50 mix-blend-difference pointer-events-none">
+          <h2 className=" tracking-[0.35em] font-display-lg text-display-lg-mobile md:text-display-lg mb-md">
             Featured Experiences
           </h2>
         </div>
@@ -206,24 +207,23 @@ export default function FeaturedScrollExperience({ experiences }: { experiences:
         </div>
 
         {/* Action Call Scroll Tracker */}
-        <div className="scroll-hint absolute bottom-6 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-white/50">
-          <span className="material-symbols-outlined animate-bounce text-[16px]">arrow_downward</span>
-          <span>Scroll to Explore</span>
+        <div className="scroll-hint absolute bottom-6 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 font-mono text-[10px] uppercase tracking-widest">
+          <span className="material-symbols-outlined animate-bounce text-[16px] text-primary">arrow_downward</span>
+          <span className='text-primary'>Scroll to Explore</span>
         </div>
 
         {/* Render Layer Blocks */}
-        <div className="absolute inset-0 w-full h-full pt-[72px] flex items-center justify-center">
+        <div className="absolute inset-0 w-full h-full pt-[24px] flex items-center justify-center">
           {featured.map((experience, index) => {
             const images = [
               experience.coverPhoto || experience.image,
               ...(experience.galleryImages || []),
             ].filter(Boolean);
 
-            const fallback = 'https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=1200&q=80';
             const displayImages = images.slice(0, 5);
 
             return (
-              <div key={experience.id} className="exp-panel absolute inset-0 w-full h-full pt-[72px] flex items-center justify-center bg-transparent">
+              <div key={experience.id} className="exp-panel absolute inset-0 w-full h-full pt-[24px] flex items-center justify-center bg-transparent">
 
                 {/* The Morphing Card container wrapper */}
                 <div className="exp-card relative shadow-2xl overflow-hidden bg-neutral-900">
@@ -259,9 +259,9 @@ export default function FeaturedScrollExperience({ experiences }: { experiences:
                         {experience.title}
                       </h3>
 
-                      <p
+                      <div
                         className="reveal-text font-normal text-sm sm:text-base md:text-lg text-white/75 mb-6 max-w-2xl leading-relaxed line-clamp-2"
-                        dangerouslySetInnerHTML={{ __html: experience.summary || experience.description }}
+                        dangerouslySetInnerHTML={{ __html: sanitizeTipTapHTML(experience.summary || experience.description) }}
                         suppressHydrationWarning
                       />
 

@@ -42,6 +42,8 @@
   --color-on-secondary-container: #00476e;
   --color-tertiary-container: #5a302f;
   --color-primary-fixed: #c1ecd4;
+  --color-gold-accent: #c5a880;
+  --color-gold-light: #f4ede2;
   --color-on-primary-fixed-variant: #274e3d;
   --color-on-secondary-fixed-variant: #004b73;
   --color-on-surface-variant: #414844;
@@ -172,6 +174,18 @@
   }
 }
 
+@keyframes float-orb-delayed {
+  0% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-30px) scale(1.08);
+  }
+  100% {
+    transform: translateY(0px) scale(1);
+  }
+}
+
 @keyframes twinkle {
   from {
     opacity: 0.15;
@@ -216,6 +230,14 @@
 
 @utility animate-slow-pan {
   animation: slowPan 30s ease-in-out infinite;
+}
+
+@utility animate-float-orb {
+  animation: float-orb 8s ease-in-out infinite;
+}
+
+@utility animate-float-orb-delayed {
+  animation: float-orb-delayed 10s ease-in-out infinite;
 }
 
 @utility delay-100 {
@@ -263,6 +285,11 @@
 @utility visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+.scroll-reveal.visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 
 @utility hide-scrollbar {

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { canUserReviewExperience, createReview, getReviewsForExperience } from '@/lib/content-store';
+import { createReview, getReviewsForExperience } from '@/lib/content-store';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -15,37 +15,40 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const cookieStore = await cookies();
-  const sessionCookie = cookieStore.get('user_session');
-
-  if (!sessionCookie?.value) {
-    return NextResponse.json({ error: 'You must be signed in to leave a review' }, { status: 401 });
-  }
-
-  let sessionUser: { userId?: string; name?: string } | null = null;
-  try {
-    sessionUser = JSON.parse(sessionCookie.value);
-  } catch {
-    sessionUser = null;
-  }
-
   const body = await request.json();
   const experienceId = body.experienceId as string | undefined;
-  const userId = sessionUser?.userId;
+  const userName = (body.userName as string | undefined)?.trim();
+  const title = (body.title as string | undefined)?.trim();
+  const comment = (body.comment as string | undefined)?.trim();
+  const rating = body.rating as number | undefined;
 
-  if (!experienceId || !userId) {
-    return NextResponse.json({ error: 'Missing experience or profile' }, { status: 400 });
+  if (!experienceId || !title || !comment) {
+    return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
   }
 
-  const allowed = await canUserReviewExperience(userId, experienceId);
-  if (!allowed) {
-    return NextResponse.json({ error: 'Only travelers with a confirmed booking can leave a review' }, { status: 403 });
+  // Try to get user info from session if available, otherwise use the provided name
+  let reviewerName = userName || 'Anonymous Traveler';
+  let userId = `guest-${Date.now()}`;
+
+  const cookieStore = await cookies();
+  const sessionCookie = cookieStore.get('user_session');
+  if (sessionCookie?.value) {
+    try {
+      const sessionUser = JSON.parse(sessionCookie.value);
+      if (sessionUser?.name) reviewerName = sessionUser.name;
+      if (sessionUser?.userId) userId = sessionUser.userId;
+    } catch {
+      // ignore parse errors, use guest defaults
+    }
   }
 
   const review = await createReview({
-    ...body,
+    experienceId,
     userId,
-    userName: sessionUser?.name || 'Traveler',
+    userName: reviewerName,
+    title,
+    comment,
+    rating: rating ?? 5,
   });
 
   return NextResponse.json(review, { status: 201 });

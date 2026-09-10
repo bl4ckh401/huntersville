@@ -51,7 +51,16 @@ export default function BookingSidebar({
   const [date, setDate] = useState('');
   const [guestCount, setGuestCount] = useState(1);
   const [message, setMessage] = useState('');
-  const [isSaving, setIsSaving] = useState(false);
+  const [paymentTab, setPaymentTab] = useState<'wire' | 'card'>('wire');
+  const [copiedLabel, setCopiedLabel] = useState('');
+
+  const copyToClipboard = (text: string, label: string) => {
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(text);
+      setCopiedLabel(label);
+      setTimeout(() => setCopiedLabel(''), 2500);
+    }
+  };
 
   useEffect(() => {
     async function loadProfile() {
@@ -213,6 +222,109 @@ export default function BookingSidebar({
         </button>
         {message && <p className={`text-sm ${message.includes('✓') ? 'text-primary' : 'text-error'}`}>{message}</p>}
       </form>
+
+      {/* Payment Methods & Wire Incentive Badge */}
+      <div className="mt-md pt-sm border-t border-outline-variant/30 space-y-xs text-center">
+        <div className="flex items-center justify-center gap-1.5 text-label-sm font-label-sm text-on-surface font-medium flex-wrap">
+          <span className="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded text-[11px] text-on-surface font-medium">
+            <span className="material-symbols-outlined text-[13px] text-primary">account_balance</span> Bank Wire (USD/KES)
+          </span>
+          <span className="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded text-[11px] text-on-surface font-medium">
+            <span className="material-symbols-outlined text-[13px] text-primary">phone_iphone</span> M-Pesa
+          </span>
+          <span className="inline-flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded text-[11px] text-on-surface font-medium">
+            <span className="material-symbols-outlined text-[13px] text-primary">credit_card</span> Visa/Mastercard
+          </span>
+        </div>
+        <p className="text-[11px] text-primary font-semibold flex items-center justify-center gap-1">
+          <span className="material-symbols-outlined text-[14px]">verified</span> Direct bank transfers eligible for 3% conservation fee waiver
+        </p>
+      </div>
+
+      <div className="mt-md pt-md border-t border-outline-variant/30 space-y-sm">
+        <div className="flex items-center justify-between mb-xs">
+          <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold flex items-center gap-xs">
+            <span className="material-symbols-outlined text-[16px] text-primary">account_balance</span> Payment Method
+          </span>
+          <span className="bg-primary-fixed text-on-primary-fixed-variant px-xs py-0.5 rounded text-[11px] font-semibold">0% Fee on Wire</span>
+        </div>
+        
+        <div className="grid grid-cols-2 gap-xs p-0.5 bg-surface-container rounded-DEFAULT text-[12px] font-medium">
+          <button 
+            type="button" 
+            onClick={() => setPaymentTab('wire')}
+            className={`py-1.5 px-sm rounded-DEFAULT text-center flex items-center justify-center gap-1 transition-colors ${paymentTab === 'wire' ? 'bg-surface text-primary font-semibold shadow-sm' : 'text-on-surface-variant hover:text-on-surface'}`}
+          >
+            <span className="material-symbols-outlined text-[14px]">account_balance</span> Direct Bank Wire
+          </button>
+          <button 
+            type="button" 
+            onClick={() => setPaymentTab('card')}
+            className={`py-1.5 px-sm rounded-DEFAULT text-center flex items-center justify-center gap-1 transition-colors ${paymentTab === 'card' ? 'bg-surface text-primary font-semibold shadow-sm' : 'text-on-surface-variant hover:text-on-surface'}`}
+          >
+            <span className="material-symbols-outlined text-[14px]">credit_card</span> Card / M-Pesa
+          </button>
+        </div>
+        
+        {paymentTab === 'wire' ? (
+          <>
+            <div className="p-sm bg-surface-container-low rounded-lg border border-outline-variant/40 text-[12px] space-y-xs">
+              <div className="flex justify-between items-center pb-1 border-b border-outline-variant/20">
+                <span className="text-on-surface-variant">Bank:</span>
+                <span className="font-semibold text-on-surface">Standard Chartered Bank</span>
+              </div>
+              <div className="flex justify-between items-center pb-1 border-b border-outline-variant/20">
+                <span className="text-on-surface-variant">Account Name:</span>
+                <span className="font-semibold text-on-surface text-right">HuntersVille Tours Ltd</span>
+              </div>
+              <div className="flex justify-between items-center pb-1 border-b border-outline-variant/20">
+                <span className="text-on-surface-variant">Account No:</span>
+                <span className="font-mono font-bold text-primary tracking-wide">0102049281001</span>
+              </div>
+              <div className="flex justify-between items-center pb-1 border-b border-outline-variant/20">
+                <span className="text-on-surface-variant">SWIFT / BIC:</span>
+                <span className="font-mono font-bold text-on-surface">SCBLKENX</span>
+              </div>
+              <div className="flex justify-between items-center pb-1 border-b border-outline-variant/20">
+                <span className="text-on-surface-variant">Branch:</span>
+                <span className="text-on-surface">Westlands Premier, Nairobi</span>
+              </div>
+              <div className="pt-1 text-[11px] text-on-surface-variant leading-tight flex items-start gap-1">
+                <span className="material-symbols-outlined text-[14px] text-primary mt-0.5">info</span>
+                <span className="">Use your <strong>Booking Ref</strong> or Full Name as reference. Confirmation verified within 12–24h.</span>
+              </div>
+            </div>
+            
+            <div className="flex gap-xs">
+              <button type="button" className="flex-1 bg-surface border border-outline-variant/40 hover:bg-surface-container py-1.5 px-2 rounded-DEFAULT text-[11px] font-label-md text-on-surface flex items-center justify-center gap-1 transition-colors">
+                <span className="material-symbols-outlined text-[14px]">content_copy</span> Copy Details
+              </button>
+              <button type="button" className="flex-1 bg-surface border border-outline-variant/40 hover:bg-surface-container py-1.5 px-2 rounded-DEFAULT text-[11px] font-label-md text-primary flex items-center justify-center gap-1 transition-colors">
+                <span className="material-symbols-outlined text-[14px]">download</span> Wire PDF Guide
+              </button>
+            </div>
+          </>
+        ) : (
+          <div className="p-sm bg-surface-container-low rounded-lg border border-outline-variant/40 text-[12px] space-y-sm">
+            <div className="flex items-center gap-sm">
+              <div className="p-2 bg-primary/10 rounded-full text-primary">
+                <span className="material-symbols-outlined text-[20px]">credit_card</span>
+              </div>
+              <div>
+                <h5 className="font-semibold text-on-surface">Secure Online Payment</h5>
+                <p className="text-[11px] text-on-surface-variant">Pay instantly via Stripe or M-Pesa</p>
+              </div>
+            </div>
+            <p className="text-on-surface-variant leading-snug">
+              Upon confirming your booking, you will receive a secure payment link via email to complete your transaction using Visa, Mastercard, Amex, or M-Pesa.
+            </p>
+            <div className="pt-2 flex items-center gap-2 border-t border-outline-variant/20">
+              <span className="material-symbols-outlined text-[16px] text-green-600">lock</span>
+              <span className="text-[11px] text-on-surface font-medium">256-bit SSL Encrypted</span>
+            </div>
+          </div>
+        )}
+      </div>
 
       <div className="flex flex-wrap items-center justify-center gap-x-sm gap-y-1 text-center font-label-sm text-label-sm text-on-surface-variant">
         <span className="flex items-center gap-xs">

@@ -147,6 +147,7 @@ export default function SavannahTimeline() {
         });
       }
 
+      ScrollTrigger.sort();
       ScrollTrigger.refresh();
     };
 

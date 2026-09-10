@@ -33,7 +33,7 @@ export default async function TourDetailsPage({ params }: { params: Promise<{ id
   }
 
   const [reviewSummary, reviews] = await Promise.all([getReviewSummary(id), getReviewsForExperience(id)]);
-  const reviewsCount = reviewSummary.count || Math.max(1, experience.bookings);
+  const reviewsCount = reviewSummary.count;
 
   const images = Array.from(
     new Set(

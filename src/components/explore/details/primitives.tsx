@@ -1,4 +1,7 @@
+
+
 import type { ReactNode } from 'react';
+import { sanitizeTipTapHTML } from '@/lib/sanitize-tiptap-html';
 
 /* ---------- Helpers ---------- */
 
@@ -55,7 +58,7 @@ export function RichText({ html, className = '' }: { html: string; className?: s
     <div
       className={`max-w-none font-body-md text-body-md leading-relaxed text-on-surface-variant [&_a]:text-primary [&_a]:underline [&_h3]:mb-2 [&_h3]:mt-3 [&_h3]:font-title-md [&_h3]:text-title-md [&_h3]:text-on-surface [&_li]:mb-1 [&_ol]:mb-3 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-3 [&_strong]:text-on-surface [&_ul]:mb-3 [&_ul]:list-disc [&_ul]:pl-5 ${className}`}
       // Content is authored by trusted admins through the experience builder.
-      dangerouslySetInnerHTML={{ __html: html }}
+      dangerouslySetInnerHTML={{ __html: sanitizeTipTapHTML(html) }}
     />
   );
 }

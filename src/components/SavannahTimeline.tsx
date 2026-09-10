@@ -189,12 +189,12 @@ export default function SavannahTimeline() {
       <div ref={trackRef} className="relative z-20 flex items-stretch h-full will-change-transform" style={{ width: 'max-content' }}>
 
         {/* Intro panel */}
-        <div className="flex flex-col justify-center gap-4 px-14 md:px-20 shrink-0" style={{ width: '45vw', minWidth: '340px' }}>
+        <div className="flex flex-col justify-center gap-3 md:gap-4 px-4 md:px-8 lg:px-14 shrink-0" style={{ width: '45vw', minWidth: '260px' }}>
           {/* <p className="rv text-emerald-400 uppercase tracking-[0.3em] text-[10px] font-bold">Phase One</p> */}
-          <h2 className="rv font-display-lg text-4xl md:text-6xl text-white leading-tight font-bold">
+          <h2 className="rv font-display-lg text-3xl md:text-5xl lg:text-6xl text-white leading-tight font-bold">
             Into the Wild
           </h2>
-          <p className="rv text-white/90 md:text-xs leading-relaxed">
+          <p className="rv text-white/90 text-xs sm:text-sm leading-relaxed">
             Journey through East Africa's greatest safari destinations.
           </p>
           <div className="rv flex items-center gap-2 text-emerald-400/70">
@@ -211,14 +211,14 @@ export default function SavannahTimeline() {
           return (
             <div
               key={exp.id}
-              className="sv-panel relative flex flex-col justify-between h-full shrink-0 py-8 px-6"
-              style={{ width: '36vw', minWidth: '300px' }}
+              className="sv-panel relative flex flex-col justify-between h-full shrink-0 py-6 px-3 sm:px-4 md:px-6"
+              style={{ width: '36vw', minWidth: '260px' }}
             >
               {/* TOP SLOT */}
               <div className="flex-1 flex items-end pb-3">
                 {isTop && (
                   <div
-                    className="w-full p-4 rounded-2xl"
+                    className="w-full p-3 md:p-4 rounded-2xl"
                     style={{
                       background: 'rgba(5,12,3,0.80)',
                       backdropFilter: 'blur(20px) saturate(180%)',
@@ -226,10 +226,10 @@ export default function SavannahTimeline() {
                       boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
                     }}
                   >
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-1 md:gap-2">
                       <p className="rv text-emerald-300 uppercase tracking-[0.18em] text-[8px] font-bold">{exp.subtitle}</p>
-                      <h3 className="rv text-white font-display-lg text-lg leading-snug">{exp.title}</h3>
-                      <p className="rv text-white/60 text-[11px] leading-relaxed">{exp.description}</p>
+                      <h3 className="rv text-white font-display-lg text-base md:text-lg leading-snug">{exp.title}</h3>
+                      <p className="rv text-white/60 text-[10px] sm:text-[11px] leading-relaxed">{exp.description}</p>
                       <div className="rv flex flex-wrap gap-1">
                         {exp.tags.map((tag) => (
                           <span key={tag} className="px-2 py-0.5 text-[8px] uppercase tracking-wide text-emerald-200 rounded-full" style={{ background: 'rgba(52,211,153,0.1)', border: '1px solid rgba(52,211,153,0.25)' }}>
@@ -264,7 +264,7 @@ export default function SavannahTimeline() {
               <div className="flex-1 flex items-start pt-3">
                 {!isTop && (
                   <div
-                    className="w-full p-4 rounded-2xl"
+                    className="w-full p-3 md:p-4 rounded-2xl"
                     style={{
                       background: 'rgba(5,12,3,0.80)',
                       backdropFilter: 'blur(20px) saturate(180%)',
@@ -272,10 +272,10 @@ export default function SavannahTimeline() {
                       boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
                     }}
                   >
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-1 md:gap-2">
                       <p className="rv text-emerald-300 uppercase tracking-[0.18em] text-[8px] font-bold">{exp.subtitle}</p>
-                      <h3 className="rv text-white font-display-lg text-lg leading-snug">{exp.title}</h3>
-                      <p className="rv text-white/60 text-[11px] leading-relaxed">{exp.description}</p>
+                      <h3 className="rv text-white font-display-lg text-base md:text-lg leading-snug">{exp.title}</h3>
+                      <p className="rv text-white/60 text-[10px] sm:text-[11px] leading-relaxed">{exp.description}</p>
                       <div className="rv flex flex-wrap gap-1">
                         {exp.tags.map((tag) => (
                           <span key={tag} className="px-2 py-0.5 text-[8px] uppercase tracking-wide text-emerald-200 rounded-full" style={{ background: 'rgba(52,211,153,0.1)', border: '1px solid rgba(52,211,153,0.25)' }}>

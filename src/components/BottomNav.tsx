@@ -2,52 +2,60 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { motion, useReducedMotion } from 'framer-motion';
+
+const links = [
+  { href: '/', label: 'Home', icon: 'home' },
+  { href: '/explore', label: 'Explore', icon: 'search' },
+  { href: '/gallery', label: 'Gallery', icon: 'photo_library' },
+  { href: '/about', label: 'About', icon: 'tour' },
+];
 
 export default function BottomNav() {
   const pathname = usePathname();
-
-  const links = [
-    { href: '/', label: 'Home', icon: 'home', activeOn: ['/'] },
-    { href: '/explore', label: 'Explore', icon: 'search', activeOn: ['/explore'] },
-    { href: '/gallery', label: 'Gallery', icon: 'photo_library', activeOn: ['/gallery'] },
-    { href: '/about', label: 'About', icon: 'tour', activeOn: ['/about'] },
-  ];
+  const reduceMotion = useReducedMotion();
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-xl border-t border-outline-variant/30 pb-[env(safe-area-inset-bottom)] shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
-      <div className="flex justify-around items-center relative h-16 px-2 mt-1">
-        {links.map(({ href, label, icon, activeOn }) => {
-          const isActive = activeOn.includes(pathname) || (href !== '/' && pathname.startsWith(href));
+    <nav className="md:hidden fixed bottom-0 left-0 z-50 w-full pb-[env(safe-area-inset-bottom)]">
+      <div className="mx-4 mb-3 flex items-center justify-between rounded-[28px] border border-outline-variant/40 bg-surface/80 px-2 py-2 shadow-[0_8px_30px_rgba(0,0,0,0.12)] backdrop-blur-xl dark:shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
+        {links.map(({ href, label, icon }) => {
+          const isActive = href === '/' ? pathname === '/' : pathname.startsWith(href);
+
           return (
-            <Link key={href} href={href} className="flex flex-col items-center justify-center flex-1 h-full relative group z-10 w-full">
-               
-               {/* The Depression Hole (Downward Arc) */}
-               <div 
-                 className={`absolute transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] rounded-full
-                 ${isActive 
-                   ? 'w-14 h-14 bg-black/[0.04] dark:bg-black/40 shadow-[inset_0_6px_12px_rgba(0,0,0,0.15)] dark:shadow-[inset_0_6px_12px_rgba(0,0,0,0.6)] border-t border-black/5 dark:border-white/5 opacity-100 translate-y-0' 
-                   : 'w-10 h-10 bg-transparent opacity-0 -translate-y-4'}`}
-               ></div>
-               
-               {/* The Icon */}
-               <span 
-                 className={`material-symbols-outlined text-[26px] relative z-20 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
-                 ${isActive 
-                   ? 'text-primary icon-fill translate-y-0 scale-110 drop-shadow-sm' 
-                   : 'text-on-surface-variant group-hover:text-primary -translate-y-2'}`}
-               >
-                 {icon}
-               </span>
-               
-               {/* The Label */}
-               <span 
-                 className={`font-label-sm text-[10px] tracking-wide absolute bottom-0 z-20 transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
-                 ${isActive 
-                   ? 'text-primary opacity-0 translate-y-4 scale-75' 
-                   : 'text-on-surface-variant opacity-100 translate-y-0 scale-100'}`}
-               >
-                 {label}
-               </span>
+            <Link
+              key={href}
+              href={href}
+              aria-current={isActive ? 'page' : undefined}
+              className="relative flex flex-1 flex-col items-center justify-center py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 rounded-2xl"
+            >
+              {isActive && (
+                <motion.div
+                  layoutId="nav-pill"
+                  className="absolute inset-x-1 inset-y-0 rounded-2xl bg-primary/10"
+                  transition={
+                    reduceMotion
+                      ? { duration: 0 }
+                      : { type: 'spring', stiffness: 500, damping: 34 }
+                  }
+                />
+              )}
+
+              <motion.span
+                whileTap={{ scale: 0.85 }}
+                className={`material-symbols-outlined relative z-10 text-[24px] transition-colors duration-200 ${
+                  isActive ? 'text-primary icon-fill' : 'text-on-surface-variant'
+                }`}
+              >
+                {icon}
+              </motion.span>
+
+              <span
+                className={`relative z-10 mt-0.5 text-[11px] font-medium transition-opacity duration-200 ${
+                  isActive ? 'text-primary opacity-100' : 'text-on-surface-variant opacity-70'
+                }`}
+              >
+                {label}
+              </span>
             </Link>
           );
         })}

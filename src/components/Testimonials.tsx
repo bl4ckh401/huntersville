@@ -63,13 +63,13 @@ export default function Testimonials({ reviews }: TestimonialsProps) {
   if (testimonials.length === 0) return null;
 
   return (
-    <section className="mx-auto px-gutter pt-lg pb-md scroll-reveal bg-surface-container-low rounded-3xl shadow-sm">
-      <div className="relative max-w-3xl mx-auto px-4 py-12">
-        <span className="material-symbols-outlined text-[56px] text-primary/20 mb-8 absolute top-6 left-1/2 -translate-x-1/2">
+    <section className="mx-auto px-gutter pt-6 pb-4 md:pt-lg md:pb-md scroll-reveal bg-surface-container-low rounded-3xl shadow-sm">
+      <div className="relative max-w-3xl mx-auto px-4 py-8 md:py-12">
+        <span className="material-symbols-outlined text-[48px] md:text-[56px] text-primary/20 mb-6 md:mb-8 absolute top-4 md:top-6 left-1/2 -translate-x-1/2">
           format_quote
         </span>
 
-        <div className="relative overflow-hidden min-h-[220px] flex flex-col items-center text-center">
+        <div className="relative overflow-hidden min-h-[180px] md:min-h-[220px] flex flex-col items-center text-center">
           {testimonials.map((testimonial, index) => (
             <div
               key={testimonial.id}
@@ -77,7 +77,7 @@ export default function Testimonials({ reviews }: TestimonialsProps) {
                 index === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
               }`}
             >
-              <p className="font-display-lg-mobile text-primary italic mb-10 leading-tight">
+              <p className="font-display-lg-mobile md:text-display-lg text-primary italic mb-6 md:mb-10 leading-snug">
                 &quot;{testimonial.comment}&quot;
               </p>
               <div className="flex flex-col items-center">

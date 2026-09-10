@@ -121,9 +121,16 @@ export default function GlobalReach({ experiences = [] }: GlobalReachProps) {
         transformOrigin: 'left center',
         willChange: 'transform',
       });
+
+      const isMobile = window.innerWidth < 640;
+      const navPillInitW = isMobile ? '70px' : '90px';
+      const navPillInitPad = isMobile ? '4px 8px' : '4px 12px';
+      const navPillExpandW = isMobile ? '130px' : '240px';
+      const navPillExpandPad = isMobile ? '4px 12px' : '4px 24px';
+
       gsap.set(navPills, {
-        width: '90px',
-        padding: '4px 12px',
+        width: navPillInitW,
+        padding: navPillInitPad,
         opacity: 0.42,
         willChange: 'width, padding, opacity, transform',
       });
@@ -158,7 +165,7 @@ export default function GlobalReach({ experiences = [] }: GlobalReachProps) {
         if (cIdx > 0) {
           masterTimeline.to(
             navPills[cIdx - 1],
-            { width: '90px', padding: '4px 12px', opacity: 0.58, duration: 1, ease: 'power2.inOut' },
+            { width: navPillInitW, padding: navPillInitPad, opacity: 0.58, duration: 1, ease: 'power2.inOut' },
             currentTime
           );
           masterTimeline.to(
@@ -170,7 +177,7 @@ export default function GlobalReach({ experiences = [] }: GlobalReachProps) {
 
         masterTimeline.to(
           navPills[cIdx],
-          { width: '240px', padding: '4px 24px', opacity: 1, duration: 1, ease: 'power2.inOut' },
+          { width: navPillExpandW, padding: navPillExpandPad, opacity: 1, duration: 1, ease: 'power2.inOut' },
           currentTime
         );
         masterTimeline.to(
@@ -306,17 +313,17 @@ export default function GlobalReach({ experiences = [] }: GlobalReachProps) {
   return (
     <section ref={sectionRef} className="relative z-20 w-full overflow-x-hidden bg-background text-foreground">
       <div ref={pinRef} className="relative h-screen w-full overflow-hidden bg-background font-sans text-foreground">
-        <div className="absolute left-1/2 top-[80px] z-50 flex -translate-x-1/2 select-none gap-2 sm:gap-4 mix-blend-difference">
+        <div className="absolute left-1/2 top-[80px] z-50 flex -translate-x-1/2 select-none gap-1 sm:gap-2 md:gap-4">
           {journeyChapters.map((chapter, idx) => (
             <div
               key={chapter.name}
-              className="nav-pill relative flex h-10 flex-col items-start justify-center overflow-hidden rounded-full border border-white/20 bg-white/5 backdrop-blur-md"
+              className="nav-pill relative flex h-8 md:h-10 flex-col items-start justify-center overflow-hidden rounded-full border border-white/20 bg-white/5 backdrop-blur-md"
             >
-              <div className="relative z-10 flex w-full items-center gap-2 px-1">
-                <span className={`nav-text-${idx} whitespace-nowrap font-mono text-[9px] uppercase tracking-widest text-foreground sm:text-[11px]`}>
+              <div className="relative z-10 flex w-full items-center gap-1 sm:gap-2 px-1">
+                <span className={`nav-text-${idx} whitespace-nowrap font-mono text-[8px] sm:text-[9px] uppercase tracking-widest text-foreground`}>
                   {chapter.name}
                 </span>
-                <span className="nav-check material-symbols-outlined absolute right-1 text-[12px] text-foreground/80">
+                <span className="nav-check material-symbols-outlined absolute right-1 text-[10px] md:text-[12px] text-foreground/80">
                   check
                 </span>
               </div>
@@ -333,22 +340,22 @@ export default function GlobalReach({ experiences = [] }: GlobalReachProps) {
           {journeyChapters.map((chapter, cIdx) => (
             <div key={chapter.name} className="pointer-events-none absolute inset-0 h-full w-full">
               <div
-                className={`chapter-intro chapter-intro-${cIdx} absolute inset-0 z-40 flex flex-col items-center justify-center bg-background px-6 text-center`}
+                className={`chapter-intro chapter-intro-${cIdx} absolute inset-0 z-40 flex flex-col items-center justify-center bg-background px-4 sm:px-6 text-center`}
               >
-                <div className="mb-10 h-[1px] w-full max-w-sm bg-white/20" />
-                <h2 className="mb-6 font-serif text-5xl font-bold uppercase tracking-tight md:text-8xl" style={{ color: chapter.color }}>
+                <div className="mb-8 md:mb-10 h-[1px] w-full max-w-sm bg-white/20" />
+                <h2 className="mb-4 md:mb-6 font-serif text-3xl sm:text-4xl md:text-5xl lg:text-8xl font-bold uppercase tracking-tight" style={{ color: chapter.color }}>
                   {chapter.name}
                 </h2>
-                <p className="max-w-2xl font-serif text-xl font-light leading-relaxed text-foreground md:text-3xl">
+                <p className="max-w-2xl font-serif text-base sm:text-lg md:text-xl font-light leading-relaxed text-foreground md:text-2xl lg:text-3xl">
                   {chapter.desc}
                 </p>
-                <div className="mt-12 flex flex-col items-center gap-4">
+                <div className="mt-8 md:mt-12 flex flex-col items-center gap-3 md:gap-4">
                   <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-foreground/40">
                     Scroll to Explore
                   </span>
-                  <div className="h-12 w-[1px] bg-gradient-to-b from-white/40 to-transparent" />
+                  <div className="h-10 md:h-12 w-[1px] bg-gradient-to-b from-white/40 to-transparent" />
                 </div>
-                <div className="mt-10 h-[1px] w-full max-w-sm bg-white/20" />
+                <div className="mt-8 md:mt-10 h-[1px] w-full max-w-sm bg-white/20" />
               </div>
 
               {chapter.scenes.map((scene, sIdx) => {
@@ -375,20 +382,20 @@ export default function GlobalReach({ experiences = [] }: GlobalReachProps) {
 
                     <div className="absolute inset-0 z-10 mix-blend-multiply bg-gradient-to-t from-black/95 via-black/20 to-black/10" />
 
-                    <div className="absolute inset-0 z-20 mx-auto flex w-full max-w-[1800px] flex-col justify-end px-6 pb-24 sm:px-24 md:pb-32">
+                    <div className="absolute inset-0 z-20 mx-auto flex w-full max-w-[1800px] flex-col justify-end px-4 pb-16 sm:px-8 md:px-24 lg:pb-32">
                       <div className="scene-text max-w-5xl">
-                        <div className="mb-8 flex items-center gap-4">
-                          <span className="h-[2px] w-12" style={{ backgroundColor: chapter.color }} />
-                          <span className="font-mono text-xs font-bold uppercase tracking-[0.3em] text-white/90 drop-shadow-md md:text-sm">
+                        <div className="mb-4 md:mb-6 lg:mb-8 flex items-center gap-3 md:gap-4">
+                          <span className="h-[2px] w-8 md:w-12" style={{ backgroundColor: chapter.color }} />
+                          <span className="font-mono text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] sm:tracking-[0.3em] text-white/90 drop-shadow-md md:text-sm">
                             {scene.location || scene.destination}
                           </span>
                         </div>
 
-                        <h3 className="mb-8 font-serif text-5xl font-bold leading-[1.05] text-white drop-shadow-2xl sm:text-6xl md:text-8xl">
+                        <h3 className="mb-4 md:mb-6 lg:mb-8 font-serif text-2xl sm:text-4xl md:text-5xl lg:text-8xl font-bold leading-[1.05] text-white drop-shadow-2xl">
                           {scene.title}
                         </h3>
 
-                        <div className="flex flex-col justify-between gap-8 sm:flex-row sm:items-end">
+                        <div className="flex flex-col justify-between gap-4 sm:gap-6 md:gap-8 sm:flex-row sm:items-end">
                           <p
                             className="max-w-2xl font-sans text-base font-light leading-relaxed text-white/80 drop-shadow-md md:text-xl"
                             dangerouslySetInnerHTML={{ __html: sanitizeTipTapHTML(scene.summary || scene.description) }}
@@ -417,12 +424,12 @@ export default function GlobalReach({ experiences = [] }: GlobalReachProps) {
 
               {cIdx < journeyChapters.length - 1 && (
                 <div className={`interlude-screen interlude-${cIdx} absolute inset-0 z-50 flex items-center justify-center bg-black`}>
-                  <div className="flex items-center gap-6 opacity-70 md:gap-12">
-                    <span className="font-serif text-3xl uppercase tracking-widest text-foreground/40 md:text-5xl">
+                  <div className="flex items-center gap-4 opacity-70 md:gap-12">
+                    <span className="font-serif text-2xl sm:text-3xl uppercase tracking-widest text-foreground/40 md:text-5xl">
                       {chapter.name}
                     </span>
-                    <span className="h-[1px] w-16 bg-white/30 md:w-32" />
-                    <span className="font-serif text-3xl uppercase tracking-widest text-foreground md:text-5xl">
+                    <span className="h-[1px] w-12 bg-white/30 md:w-32" />
+                    <span className="font-serif text-2xl sm:text-3xl uppercase tracking-widest text-foreground md:text-5xl">
                       {journeyChapters[cIdx + 1].name}
                     </span>
                   </div>

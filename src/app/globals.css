@@ -78,6 +78,8 @@
 
   /* Font Sizes */
   --text-display-lg: 48px;
+  --text-display-md: 36px;
+  --text-display-md-mobile: 28px;
   --text-body-md: 16px;
   --text-body-lg: 18px;
   --text-headline-md: 32px;
@@ -97,6 +99,20 @@
   font-size: 48px;
   line-height: 1.1;
   letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+@utility text-display-md {
+  font-size: 36px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+}
+
+@utility text-display-md-mobile {
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
   font-weight: 700;
 }
 

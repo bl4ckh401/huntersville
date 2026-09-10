@@ -8,7 +8,7 @@ export default function FloatingActionButtons() {
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-4">
+    <div className="fixed bottom-20 md:bottom-6 right-6 z-50 flex flex-col items-end gap-4">
       {/* Embedded WhatsApp Chat Widget */}
       {isChatOpen && (
         <div className="w-[350px] sm:w-[400px] h-[500px] bg-surface-container-lowest rounded-2xl shadow-2xl border border-outline-variant/30 overflow-hidden flex flex-col origin-bottom-right">

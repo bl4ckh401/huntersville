@@ -26,24 +26,10 @@ function GalleryHero() {
       <div className="absolute -top-24 -left-20 w-[420px] h-[420px] rounded-full bg-primary-fixed-dim/25 blur-3xl pointer-events-none animate-float-orb" />
       <div className="absolute -bottom-20 right-0 w-[480px] h-[480px] rounded-full bg-gold-accent/15 blur-3xl pointer-events-none animate-float-orb-delayed" />
       <div className="max-w-[1280px] mx-auto px-6 sm:px-8 relative z-10">
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-5">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs font-semibold tracking-widest uppercase">
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            Curated Visual Archive
-          </div>
-          <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-on-surface-variant font-medium">
-            <span>Vol. IV</span>
-            <span className="text-outline">•</span>
-            <span>Uncompressed Field Journals</span>
-            <span className="text-outline">•</span>
-            <span className="text-primary font-semibold">East Africa Sanctum</span>
-          </div>
-        </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-12">
           <div className="lg:col-span-8">
             <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-primary-dark tracking-tight leading-[1.12] mb-5">
-              <span className="block hero-line">Visual Chronicles</span>
+              <span className="block hero-line">Visual Tales</span>
               <span className="block hero-line italic font-normal text-surface-tint">of East Africa</span>
             </h1>
             <p className="font-sans text-base sm:text-lg text-on-surface-variant max-w-2xl leading-relaxed hero-fade">
@@ -356,19 +342,6 @@ function GalleryGrid({
           <p className="text-on-surface-variant text-sm">Try adjusting your category or sanctuary filters.</p>
         </div>
       )}
-
-      <div className="mt-14 flex flex-col items-center justify-center gap-3">
-        <p className="text-xs uppercase tracking-widest font-semibold text-on-surface-variant">
-          Viewing {visibleFrames.length} of {GALLERY_FRAMES.length} Curated Frames
-        </p>
-        <div className="w-56 h-1.5 bg-surface-container rounded-full overflow-hidden">
-          <div className="h-full bg-primary rounded-full" style={{ width: `${(visibleFrames.length / GALLERY_FRAMES.length) * 100}%` }} />
-        </div>
-        <button className="mt-2 px-8 py-3 rounded-full bg-surface-low hover:bg-primary hover:text-white border border-surface-container text-on-surface text-sm font-medium transition-all duration-200 flex items-center gap-2 shadow-sm">
-          <span>Load Next Dispatch Folio</span>
-          <span className="material-symbols-outlined text-[18px]">expand_more</span>
-        </button>
-      </div>
     </section>
   );
 }

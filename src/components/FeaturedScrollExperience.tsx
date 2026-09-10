@@ -30,9 +30,15 @@ export default function FeaturedScrollExperience({ experiences }: { experiences:
         return acc + (count > 0 ? count : 1);
       }, 0);
 
-      // Allocating a massive 4,000px of physical vertical scroll height per asset
+      // Allocating scroll height per asset
       const pxPerAsset = window.innerWidth < 768 ? 1200 : window.innerWidth < 1024 ? 2000 : 2800;
       const totalScrollDistance = totalImagesCount * pxPerAsset;
+
+      const isMobile = window.innerWidth < 768;
+      const cardInitW = isMobile ? '92vw' : '82vw';
+      const cardInitH = isMobile ? '55vh' : '58vh';
+      const cardExpandW = isMobile ? '96vw' : '94vw';
+      const cardExpandH = isMobile ? '62vh' : '76vh';
 
       const tl = gsap.timeline({
         scrollTrigger: {
@@ -70,10 +76,9 @@ export default function FeaturedScrollExperience({ experiences }: { experiences:
           gsap.set(panel, { opacity: 0 });
         }
 
-        // Elegant floating frame boundaries (clears top/bottom header views perfectly)
         gsap.set(card, {
-          width: '82vw',
-          height: '58vh', // Adjusted to balance perfectly with the introduction text frame space
+          width: cardInitW,
+          height: cardInitH,
           borderRadius: '24px',
           transformOrigin: 'center center',
         });
@@ -94,12 +99,11 @@ export default function FeaturedScrollExperience({ experiences }: { experiences:
         tl.to(globalProgress, { opacity: 0.2, duration: 0.8 }, '<');
         tl.to(globalProgress[pIndex], { opacity: 1, duration: 0.8 }, '<');
 
-        // 2. Slow Unhurried Card Expansion
         tl.to(card, {
-          width: '94vw',
-          height: '76vh',
+          width: cardExpandW,
+          height: cardExpandH,
           borderRadius: '24px',
-          duration: 4, // Stretched expansion duration
+          duration: 4,
           ease: 'power2.inOut',
         });
 
@@ -146,8 +150,8 @@ export default function FeaturedScrollExperience({ experiences }: { experiences:
         });
 
         tl.to(card, {
-          width: '82vw',
-          height: '58vh',
+          width: cardInitW,
+          height: cardInitH,
           borderRadius: '24px',
           duration: 4,
           ease: 'power2.inOut',
@@ -190,14 +194,14 @@ export default function FeaturedScrollExperience({ experiences }: { experiences:
       <div ref={pinRef} className="relative h-screen w-full overflow-hidden text-white flex items-center justify-center bg-background">
 
         {/* Editorial Section context header — positioned under the navbar gap */}
-        <div className="section-header absolute top-[0px] left-10 md:left-24 z-50 mix-blend-difference pointer-events-none">
-          <h2 className=" tracking-[0.35em] font-display-lg text-display-lg-mobile md:text-display-lg mb-md">
+        <div className="section-header absolute top-[0px] left-4 md:left-24 z-50 pointer-events-none">
+          <h2 className="tracking-[0.35em] font-display-lg text-display-lg-mobile md:text-display-lg mb-3 md:mb-md">
             Featured Experiences
           </h2>
         </div>
 
         {/* Global Progress Indicators */}
-        <div className="absolute left-6 md:left-10 top-[calc(52%+36px)] -translate-y-1/2 z-50 flex flex-col items-center gap-6 font-mono text-xs tracking-widest mix-blend-difference">
+        <div className="absolute left-4 md:left-10 top-[calc(52%+36px)] -translate-y-1/2 z-50 flex flex-col items-center gap-6 font-mono text-xs tracking-widest">
           {featured.map((_, i) => (
             <div key={i} className="flex flex-col items-center gap-6">
               <span className="global-prog-item opacity-20 transition-opacity duration-500">0{i + 1}</span>
@@ -207,9 +211,9 @@ export default function FeaturedScrollExperience({ experiences }: { experiences:
         </div>
 
         {/* Action Call Scroll Tracker */}
-        <div className="scroll-hint absolute bottom-6 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 font-mono text-[10px] uppercase tracking-widest">
-          <span className="material-symbols-outlined animate-bounce text-[16px] text-primary">arrow_downward</span>
-          <span className='text-primary'>Scroll to Explore</span>
+        <div className="scroll-hint absolute bottom-6 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-white">
+          <span className="material-symbols-outlined animate-bounce text-[16px]">arrow_downward</span>
+          <span>Scroll to Explore</span>
         </div>
 
         {/* Render Layer Blocks */}
@@ -244,10 +248,10 @@ export default function FeaturedScrollExperience({ experiences }: { experiences:
                   <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent z-10" />
 
                   {/* Editorial Text Decks */}
-                  <div className="absolute inset-0 z-20 flex flex-col justify-end pb-12 md:pb-16 px-10 md:px-20 max-w-[1400px] mx-auto w-full">
+                  <div className="absolute inset-0 z-20 flex flex-col justify-end pb-8 md:pb-16 px-4 sm:px-6 md:px-10 lg:px-20 max-w-[1400px] mx-auto w-full">
                      <div className="max-w-3xl" suppressHydrationWarning>
 
-                      <div className="reveal-text flex items-center gap-2 text-white/70 font-mono text-xs uppercase tracking-widest mb-4">
+                      <div className="reveal-text flex items-center gap-2 text-white/70 font-mono text-xs uppercase tracking-widest mb-3 md:mb-4">
                         <span className="material-symbols-outlined text-[16px] text-white/80">location_on</span>
                         {experience.location}
                         <span className="w-1 h-1 bg-white/30 rounded-full mx-1" />
@@ -255,18 +259,18 @@ export default function FeaturedScrollExperience({ experiences }: { experiences:
                         {experience.duration}
                       </div>
 
-                      <h3 className="reveal-text font-serif text-3xl sm:text-5xl md:text-6xl font-bold leading-tight mb-5 text-white tracking-tight drop-shadow-md">
+                      <h3 className="reveal-text font-serif text-3xl sm:text-5xl md:text-6xl font-bold leading-tight mb-4 md:mb-5 text-white tracking-tight drop-shadow-md">
                         {experience.title}
                       </h3>
 
                       <div
-                        className="reveal-text font-normal text-sm sm:text-base md:text-lg text-white/75 mb-6 max-w-2xl leading-relaxed line-clamp-2"
+                        className="reveal-text font-normal text-sm sm:text-base md:text-lg text-white/75 mb-5 md:mb-6 max-w-2xl leading-relaxed line-clamp-2"
                         dangerouslySetInnerHTML={{ __html: sanitizeTipTapHTML(experience.summary || experience.description) }}
                         suppressHydrationWarning
                       />
 
-                       <div className="reveal-text flex flex-wrap items-center gap-4 sm:gap-6" suppressHydrationWarning>
-                        <span className="border border-white/20 bg-white/5 backdrop-blur-md text-white px-4 py-1.5 rounded-full font-mono text-[11px] tracking-wider uppercase">
+                       <div className="reveal-text flex flex-wrap items-center gap-3 sm:gap-4 md:gap-6" suppressHydrationWarning>
+                        <span className="border border-white/20 bg-white/5 backdrop-blur-md text-white px-3 py-1.5 md:px-4 md:py-1.5 rounded-full font-mono text-[10px] sm:text-[11px] tracking-wider uppercase">
                           {experience.category}
                         </span>
                         <span className="font-mono text-xl text-white font-semibold tracking-tight">
@@ -274,7 +278,7 @@ export default function FeaturedScrollExperience({ experiences }: { experiences:
                         </span>
                         <Link
                           href={`/explore/${experience.id}`}
-                          className="ml-auto sm:ml-6 flex items-center gap-2 bg-white text-black px-5 py-2.5 rounded-full text-sm font-bold hover:bg-neutral-200 transition-colors shadow-lg"
+                          className="ml-auto sm:ml-6 flex items-center gap-2 bg-white text-black px-4 py-2 md:px-5 md:py-2.5 rounded-full text-sm font-bold hover:bg-neutral-200 transition-colors shadow-lg"
                         >
                           Explore
                           <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
@@ -286,7 +290,7 @@ export default function FeaturedScrollExperience({ experiences }: { experiences:
 
                   {/* Slide Bullet Array (Bottom Right) */}
                   {displayImages.length > 1 && (
-                    <div className="absolute right-10 md:right-20 bottom-12 md:bottom-16 z-30 flex items-center gap-2.5 mix-blend-difference">
+                    <div className="absolute right-4 md:right-10 bottom-10 md:bottom-16 z-30 flex items-center gap-2.5">
                       {displayImages.map((_, i) => (
                         <div key={i} className="gallery-dot w-1.5 h-1.5 rounded-full bg-white shadow-sm" />
                       ))}

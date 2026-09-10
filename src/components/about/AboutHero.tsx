@@ -195,12 +195,6 @@ export default function AboutHero() {
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/30 z-10" />
       
       <div className="relative z-10 text-center px-gutter max-w-4xl mx-auto pt-16">
-        <div className="inline-flex items-center gap-2 bg-primary-fixed/20 border border-primary-fixed/40 backdrop-blur-md px-4 py-1.5 rounded-full text-primary-fixed mb-6">
-          <span className="w-2 h-2 rounded-full bg-primary-fixed animate-ping" />
-          <span className="font-label-sm text-[11px] font-semibold uppercase tracking-widest">
-            Est. 2014 • Nairobi, Kenya • KATO Bonded
-          </span>
-        </div>
         
         <h1 className="font-display-lg text-4xl sm:text-5xl md:text-7xl text-white font-bold mb-6 tracking-tight drop-shadow-lg">
           The Architects of Unforgettable African Safaris
@@ -210,18 +204,6 @@ export default function AboutHero() {
           Rooted in the cradle of humanity. We design deeply transformative, low-impact expeditions that honor Africa&apos;s wildlife, indigenous custodians, and discerning global travelers.
         </p>
 
-        {/* Feature Pills */}
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-[12px] font-medium text-white/80">
-          <span className="bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full flex items-center gap-1.5">
-            <span className="material-symbols-outlined text-[16px] text-amber-400">verified</span> KATO Bonded & TRA Licensed
-          </span>
-          <span className="bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full flex items-center gap-1.5">
-            <span className="material-symbols-outlined text-[16px] text-amber-400">eco</span> 100% Carbon-Neutral Fleet
-          </span>
-          <span className="bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full flex items-center gap-1.5">
-            <span className="material-symbols-outlined text-[16px] text-amber-400">workspace_premium</span> Master Naturalist Guides
-          </span>
-        </div>
       </div>
     </section>
   );

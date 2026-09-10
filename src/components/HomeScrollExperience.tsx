@@ -10,12 +10,12 @@ gsap.registerPlugin(ScrollTrigger);
 
 function HeroContent() {
   return (
-    <div className="hero-content absolute inset-0 flex flex-col items-center justify-center text-center z-20 px-8">
-      <div className="relative z-20 h-full flex flex-col justify-center items-center text-center px-gutter max-w-container-max mx-auto w-full pt-20">
-        <h1 className="font-display-lg text-display-lg-mobile md:text-display-lg text-white mb-md drop-shadow-md max-w-4xl animate-fade-in-up opacity-0">
+    <div className="hero-content absolute inset-0 flex flex-col items-center justify-center text-center z-20 px-4 md:px-8">
+      <div className="relative z-20 h-full flex flex-col justify-center items-center text-center px-gutter max-w-container-max mx-auto w-full pt-14 md:pt-20">
+        <h1 className="font-display-lg text-display-lg-mobile md:text-display-lg text-white mb-3 md:mb-md drop-shadow-md max-w-4xl animate-fade-in-up opacity-0">
           Crafting Unforgettable Journeys Across the Cradle of Humanity.
         </h1>
-        <p className="font-body-lg text-body-lg text-white/90 mb-lg max-w-2xl drop-shadow animate-fade-in-up delay-100 opacity-0">
+        <p className="font-body-lg text-body-lg text-white/90 mb-4 md:mb-lg max-w-2xl drop-shadow animate-fade-in-up delay-100 opacity-0">
           Discover, customize, and book premium travel experiences across the globe. From coastal retreats to wildlife safaris.
         </p>
         {/* Search Bar */}
@@ -26,7 +26,7 @@ function HeroContent() {
             placeholder="Where to?"
             type="text"
           />
-          <button className="shrink-0 bg-primary text-on-primary rounded-full px-4 py-2 md:px-8 md:py-3 font-label-md text-label-md hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-lg hover:scale-105 active:scale-95 flex items-center gap-1 md:gap-2">
+          <button className="shrink-0 bg-primary text-on-primary rounded-full px-3 py-2 md:px-8 md:py-3 font-label-md text-label-md hover:bg-primary-container hover:text-on-primary-container transition-colors shadow-lg hover:scale-105 active:scale-95 flex items-center gap-1 md:gap-2">
             <span>Search</span>
             <span className="material-symbols-outlined text-[16px] md:text-[18px]">arrow_forward</span>
           </button>
@@ -35,9 +35,9 @@ function HeroContent() {
       </div>
 
       {/* Scroll cue */}
-      <div className="hero-scroll-cue absolute bottom-10 flex flex-col items-center gap-2">
+      <div className="hero-scroll-cue absolute bottom-8 md:bottom-10 flex flex-col items-center gap-2">
         <span className="font-label-sm uppercase tracking-[0.3em] text-white/50 text-[10px]">Scroll Down</span>
-        <div className="w-px h-16 bg-gradient-to-b from-white/60 to-transparent animate-pulse" />
+        <div className="w-px h-12 md:h-16 bg-gradient-to-b from-white/60 to-transparent animate-pulse" />
       </div>
     </div>
   );

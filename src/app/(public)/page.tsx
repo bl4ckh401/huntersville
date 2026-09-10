@@ -23,13 +23,13 @@ export default async function Home() {
 
         <CompanyShowcase />
 
-        <div className="h-12 w-full bg-background" />
+        <div className="h-6 w-full bg-background md:h-12" />
         
         <FeaturedScrollExperience experiences={featuredExperiences} />
 
         <GlobalReach experiences={allExperiences} />
 
-        <div className="h-16 w-full bg-background" />
+        <div className="h-8 w-full bg-background md:h-16" />
 
         <Testimonials reviews={reviews} />
       </div>

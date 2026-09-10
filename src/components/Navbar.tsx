@@ -36,11 +36,6 @@ export default function Navbar() {
             </li>
           </ul>
         </div>
-        <div className="flex items-center gap-sm">
-          <button className="md:hidden text-on-surface-variant p-2 rounded-full hover:bg-surface-container-low transition-colors">
-            <span className="material-symbols-outlined">search</span>
-          </button>
-        </div>
       </div>
     </nav>
   );

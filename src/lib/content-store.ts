@@ -208,6 +208,45 @@ export interface Review {
   createdAt: string;
 }
 
+export interface GalleryImage {
+  id: string;
+  album: string;
+  headline: string;
+  count: string;
+  location: string;
+  naturalist: string;
+  optics: string;
+  description: string;
+  src: string;
+  alt: string;
+  tags: string[];
+  category: 'wildlife' | 'lodges' | 'aerial' | 'culture' | 'coastal';
+  sanctuary: string;
+  featured: boolean;
+  time: string;
+  span: 'wide' | 'portrait' | 'standard' | 'endcap';
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface GalleryImageInput {
+  album: string;
+  headline: string;
+  count: string;
+  location: string;
+  naturalist: string;
+  optics: string;
+  description: string;
+  src: string;
+  alt: string;
+  tags: string[];
+  category: 'wildlife' | 'lodges' | 'aerial' | 'culture' | 'coastal';
+  sanctuary: string;
+  featured: boolean;
+  time: string;
+  span: 'wide' | 'portrait' | 'standard' | 'endcap';
+}
+
 export interface ExperienceFilters {
   search?: string;
   location?: string;
@@ -315,8 +354,14 @@ function getDb(): Database.Database {
       comment TEXT NOT NULL,
       createdAt TEXT NOT NULL
     );
+    CREATE TABLE IF NOT EXISTS gallery_images (
+      id TEXT PRIMARY KEY,
+      data TEXT NOT NULL
+    );
     CREATE INDEX IF NOT EXISTS idx_reviews_experience ON reviews (experienceId);
     CREATE INDEX IF NOT EXISTS idx_reviews_user ON reviews (userId);
+    CREATE INDEX IF NOT EXISTS idx_gallery_category ON gallery_images (data);
+    CREATE INDEX IF NOT EXISTS idx_gallery_sanctuary ON gallery_images (data);
   `);
 
   const existingAdmin = dbInstance.prepare('SELECT COUNT(*) as count FROM users').get() as { count: number };
@@ -759,6 +804,59 @@ export async function canUserReviewExperience(userId: string, experienceId: stri
   const allBookings = listBookings();
   return allBookings.some((row) => {
     const parsed = row as unknown as Booking;
-    return parsed.experienceId === experienceId && parsed.userId === userId && ['Confirmed', 'Paid'].includes(parsed.status);
+    return parsed.experienceId === experienceId && parsed.userId === userId && parsed.status !== 'Failed';
   });
+}
+
+function getGalleryImageRecord(id: string): GalleryImage | null {
+  const row = getDb().prepare('SELECT data FROM gallery_images WHERE id = ?').get(id) as { data: string } | undefined;
+  return row ? JSON.parse(row.data) as GalleryImage : null;
+}
+
+function listGalleryImages(): GalleryImage[] {
+  const rows = getDb().prepare('SELECT data FROM gallery_images ORDER BY createdAt DESC').all() as Array<{ data: string }>;
+  return rows.map((row) => JSON.parse(row.data) as GalleryImage);
+}
+
+function buildGalleryImage(input: GalleryImageInput): GalleryImage {
+  const now = new Date().toISOString();
+  return {
+    id: `gallery-${Date.now()}`,
+    ...input,
+    createdAt: now,
+    updatedAt: now,
+  };
+}
+
+export async function getGalleryImages(): Promise<GalleryImage[]> {
+  return listGalleryImages();
+}
+
+export async function getGalleryImageById(id: string): Promise<GalleryImage | null> {
+  return getGalleryImageRecord(id);
+}
+
+export async function createGalleryImage(input: GalleryImageInput): Promise<GalleryImage> {
+  const image = buildGalleryImage(input);
+  getDb().prepare('INSERT INTO gallery_images (id, data) VALUES (?, ?)').run(image.id, JSON.stringify(image));
+  return image;
+}
+
+export async function updateGalleryImage(id: string, updates: Partial<GalleryImageInput>): Promise<GalleryImage | null> {
+  const current = getGalleryImageRecord(id);
+  if (!current) {
+    return null;
+  }
+  const updated: GalleryImage = {
+    ...current,
+    ...updates,
+    updatedAt: new Date().toISOString(),
+  };
+  getDb().prepare('UPDATE gallery_images SET data = ? WHERE id = ?').run(JSON.stringify(updated), id);
+  return updated;
+}
+
+export async function deleteGalleryImage(id: string): Promise<boolean> {
+  const result = getDb().prepare('DELETE FROM gallery_images WHERE id = ?').run(id);
+  return result.changes > 0;
 }

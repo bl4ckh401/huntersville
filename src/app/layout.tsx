@@ -31,11 +31,13 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
           rel="stylesheet"
         />
+        <script src="https://elfsightcdn.com/platform.js" async></script>
       </head>
       <body className={`${playfair.variable} ${inter.variable} bg-background text-on-background font-body-md antialiased min-h-screen flex flex-col`}>
         <ScrollObserver />
         {children}
         <FloatingActionButtons />
+        <div className="elfsight-app-db01a530-753a-457d-840e-a2099fb11168" data-elfsight-app-lazy></div>
       </body>
     </html>
   );

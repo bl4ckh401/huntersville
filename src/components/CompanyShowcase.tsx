@@ -23,7 +23,7 @@ export default function CompanyShowcase() {
           {/* CEO Image */}
           <div className="relative h-[280px] sm:h-[360px] md:h-[480px] rounded-2xl overflow-hidden shadow-2xl group">
             <Image 
-              src="/HVLee.png" 
+              src="/serengeti.png" 
               alt="HuntersVille CEO welcoming international travelers at the lodge"
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-105"

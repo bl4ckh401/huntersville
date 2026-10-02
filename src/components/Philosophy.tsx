@@ -17,7 +17,7 @@ export default function Philosophy() {
         <div className="relative h-[280px] md:h-[500px] rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-500">
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: "url('/LeeTour.png')" }}
+            style={{ backgroundImage: "url('/safari-fleet.jpg')" }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           <div className="absolute bottom-4 md:bottom-6 left-4 md:left-6 right-4 md:right-6 text-white">

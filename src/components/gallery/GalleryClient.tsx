@@ -75,7 +75,7 @@ function GalleryHero() {
 function AlbumCard({ album, index, onOpen }: { album: (typeof GALLERY_ALBUMS)[number]; index: number; onOpen: () => void }) {
   return (
     <article
-      className="album-card flex-none w-[320px] sm:w-[370px] snap-start bg-surface-container-lowest rounded-2xl overflow-hidden border border-surface-container shadow-[0_4px_16px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.1)] transition-all duration-300 group cursor-pointer flex flex-col"
+      className="album-card flex-none w-[280px] sm:w-[320px] snap-start bg-surface-container-lowest rounded-xl sm:rounded-2xl overflow-hidden border border-surface-container shadow-[0_4px_16px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_28px_rgba(0,0,0,0.1)] transition-all duration-300 group cursor-pointer flex flex-col"
       onClick={onOpen}
       tabIndex={0}
       onKeyDown={(e) => {
@@ -85,33 +85,33 @@ function AlbumCard({ album, index, onOpen }: { album: (typeof GALLERY_ALBUMS)[nu
         }
       }}
     >
-      <div className="relative h-64 w-full overflow-hidden bg-surface-high">
+      <div className="relative h-48 sm:h-64 w-full overflow-hidden bg-surface-high">
         <Image
           alt={album.alt}
           fill
-          sizes="(max-width: 768px) 320px, 370px"
+          sizes="(max-width: 768px) 280px, 320px"
           className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
           src={album.src}
           placeholder="empty"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-primary-dark/85 via-primary-dark/20 to-transparent" />
-        <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-          <span className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-primary-dark text-xs font-semibold tracking-wide">
+        <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
+          <span className="px-2 py-0.5 sm:px-3 sm:py-1 rounded-full bg-white/90 backdrop-blur-md text-primary-dark text-[10px] sm:text-xs font-semibold tracking-wide">
             {album.region}
           </span>
-          <span className="px-3 py-1 rounded-full bg-primary/90 backdrop-blur-md text-white text-xs font-medium flex items-center gap-1">
-            <span className="material-symbols-outlined text-[14px]">photo_library</span> {album.frames} Frames
+          <span className="px-2 py-0.5 sm:px-3 sm:py-1 rounded-full bg-primary/90 backdrop-blur-md text-white text-[10px] sm:text-xs font-medium flex items-center gap-1">
+            <span className="material-symbols-outlined text-[12px] sm:text-[14px]">photo_library</span> {album.frames} Frames
           </span>
         </div>
-        <div className="absolute bottom-4 left-4 right-4 text-white">
-          <span className="text-[11px] font-medium text-primary-fixed-dim uppercase tracking-wider block mb-1">{album.subtitle}</span>
-          <h3 className="font-serif text-xl font-semibold leading-snug">{album.title}</h3>
+        <div className="absolute bottom-3 left-3 right-3 text-white">
+          <span className="text-[10px] sm:text-[11px] font-medium text-primary-fixed-dim uppercase tracking-wider block mb-1">{album.subtitle}</span>
+          <h3 className="font-serif text-lg sm:text-xl font-semibold leading-snug">{album.title}</h3>
         </div>
       </div>
-      <div className="p-5 flex items-center justify-between bg-surface-container-lowest">
-        <span className="text-xs text-on-surface-variant font-medium">Field Lead: {album.fieldLead}</span>
-        <span className="inline-flex items-center gap-1 text-xs font-semibold text-primary group-hover:translate-x-1 transition-transform">
-          Open Album <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+      <div className="p-3 sm:p-5 flex items-center justify-between bg-surface-container-lowest">
+        <span className="text-[11px] sm:text-xs text-on-surface-variant font-medium">Field Lead: {album.fieldLead}</span>
+        <span className="inline-flex items-center gap-1 text-[11px] sm:text-xs font-semibold text-primary group-hover:translate-x-1 transition-transform">
+          Open Album <span className="material-symbols-outlined text-[14px] sm:text-[16px]">arrow_forward</span>
         </span>
       </div>
     </article>
@@ -126,27 +126,27 @@ function AlbumsSection({ onOpen }: { onOpen: (index: number) => void }) {
   };
 
   return (
-    <section className="max-w-[1280px] mx-auto px-6 sm:px-8 py-14 sm:py-16">
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 sm:mb-10 gap-4">
+    <section className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 py-10 sm:py-14 md:py-16">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 sm:mb-8 gap-4">
         <div>
           <div className="flex items-center gap-1.5 text-xs font-semibold tracking-widest text-surface-tint uppercase mb-2">
             <span className="material-symbols-outlined text-[16px]">folder_special</span>
             <span>Curated Portfolios</span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-4xl font-semibold text-primary-dark">Featured Expedition Albums</h2>
-          <p className="text-sm text-on-surface-variant mt-1.5">Select a portfolio to immerse yourself in curated expedition logs and multi-frame studies.</p>
+          <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-semibold text-primary-dark">Featured Expedition Albums</h2>
+          <p className="text-xs sm:text-sm text-on-surface-variant mt-1.5">Select a portfolio to immerse yourself in curated expedition logs and multi-frame studies.</p>
         </div>
         <div className="flex items-center gap-2">
           <button
             aria-label="Scroll left"
-            className="w-10 h-10 rounded-full border border-outline-variant/60 bg-surface-container-lowest text-on-surface hover:bg-primary hover:text-white hover:border-primary flex items-center justify-center transition-all duration-200"
+            className="w-9 h-9 rounded-full border border-outline-variant/60 bg-surface-container-lowest text-on-surface hover:bg-primary hover:text-white hover:border-primary flex items-center justify-center transition-all duration-200"
             onClick={() => scrollBy('left')}
           >
             <span className="material-symbols-outlined text-[20px]">west</span>
           </button>
           <button
             aria-label="Scroll right"
-            className="w-10 h-10 rounded-full border border-outline-variant/60 bg-surface-container-lowest text-on-surface hover:bg-primary hover:text-white hover:border-primary flex items-center justify-center transition-all duration-200"
+            className="w-9 h-9 rounded-full border border-outline-variant/60 bg-surface-container-lowest text-on-surface hover:bg-primary hover:text-white hover:border-primary flex items-center justify-center transition-all duration-200"
             onClick={() => scrollBy('right')}
           >
             <span className="material-symbols-outlined text-[20px]">east</span>
@@ -156,7 +156,7 @@ function AlbumsSection({ onOpen }: { onOpen: (index: number) => void }) {
 
       <div
         ref={trackRef}
-        className="flex gap-6 overflow-x-auto pb-4 pt-1 -mx-6 px-6 sm:-mx-8 sm:px-8 hide-scrollbar snap-x snap-mandatory"
+        className="flex gap-4 sm:gap-6 overflow-x-auto pb-3 sm:pb-4 pt-1 -mx-4 px-4 sm:-mx-6 sm:px-6 md:-mx-8 md:px-8 hide-scrollbar snap-x snap-mandatory"
         id="albums-track"
       >
         {GALLERY_ALBUMS.map((album, index) => (
@@ -179,14 +179,14 @@ function FilterBar({
   setActiveSanctuary: (s: Sanctuary) => void;
 }) {
   return (
-    <section className="max-w-[1280px] mx-auto px-6 sm:px-8 mb-8">
-      <div className="bg-surface-low border border-surface-container rounded-2xl p-4 sm:p-5 flex flex-col gap-4">
-        <div className="flex items-center justify-between gap-4 overflow-x-auto pb-1 hide-scrollbar">
-          <div className="flex items-center gap-2" id="category-tabs">
+    <section className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 mb-6 sm:mb-8">
+      <div className="bg-surface-low border border-surface-container rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-5 flex flex-col gap-3 sm:gap-4">
+        <div className="flex items-center justify-between gap-3 overflow-x-auto pb-1 hide-scrollbar">
+          <div className="flex items-center gap-1.5 sm:gap-2" id="category-tabs">
             {GALLERY_CATEGORIES.map((category) => (
               <button
                 key={category.id}
-                className={`filter-tab px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
+                className={`filter-tab px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-[11px] sm:text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
                   activeCategory === category.id
                     ? 'bg-primary text-white shadow-sm'
                     : 'bg-surface-container-lowest text-on-surface-variant hover:text-primary hover:bg-white border border-surface-container'
@@ -252,7 +252,7 @@ function GridCard({ frame, index, onOpen }: { frame: GalleryFrame; index: number
 
   return (
     <div
-      className={`grid-card group relative rounded-2xl overflow-hidden bg-surface-high border border-surface-container shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer ${spanClass}`}
+      className={`grid-card group relative rounded-lg sm:rounded-2xl overflow-hidden bg-surface-high border border-surface-container shadow-sm hover:shadow-xl transition-all duration-500 cursor-pointer ${spanClass}`}
       onClick={onOpen}
       tabIndex={0}
       onKeyDown={(e) => {
@@ -272,37 +272,36 @@ function GridCard({ frame, index, onOpen }: { frame: GalleryFrame; index: number
       />
       <div className="absolute inset-0 bg-gradient-to-t from-primary-dark/90 via-primary-dark/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity" />
 
-      <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-        <div className="flex items-center gap-2 flex-wrap">
+      <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
+        <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
           {frame.tags.map((tag) => (
-            <span key={tag} className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-primary-dark text-xs font-semibold">
+            <span key={tag} className="px-2 py-0.5 sm:px-3 sm:py-1 rounded-full bg-white/90 backdrop-blur-md text-primary-dark text-[10px] sm:text-xs font-semibold">
               {tag}
             </span>
           ))}
         </div>
         <button
-          className="w-9 h-9 rounded-full bg-white/80 backdrop-blur-md text-on-surface flex items-center justify-center hover:bg-white transition-colors"
+          className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/80 backdrop-blur-md text-on-surface flex items-center justify-center hover:bg-white transition-colors"
           onClick={(e) => {
             e.stopPropagation();
             e.currentTarget.classList.toggle('text-red-400');
           }}
           aria-label="Add to favorites"
         >
-          <span className="material-symbols-outlined text-[18px]">favorite</span>
+          <span className="material-symbols-outlined text-[16px] sm:text-[18px]">favorite</span>
         </button>
       </div>
 
-      <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between text-white">
-        <div className="w-full max-w-[calc(100%-48px)]">
-          <span className="text-[11px] text-primary-fixed-dim uppercase tracking-widest font-semibold block mb-1">{frame.time}</span>
-          <h3 className={`font-serif font-semibold leading-snug ${frame.span === 'wide' || frame.span === 'endcap' ? 'text-2xl' : 'text-xl'}`}>{frame.headline}</h3>
-          <p className="text-xs text-white/80 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 line-clamp-1 font-light max-w-lg">
+      <div className="absolute bottom-3 sm:bottom-5 left-3 sm:left-5 right-3 sm:right-5 flex items-end justify-between text-white">
+        <div className="w-full max-w-[calc(100%-36px)] sm:max-w-[calc(100%-48px)]">
+          <span className="text-[10px] sm:text-[11px] text-primary-fixed-dim uppercase tracking-widest font-semibold block mb-1">{frame.time}</span>
+          <h3 className={`font-serif font-semibold leading-snug ${frame.span === 'wide' || frame.span === 'endcap' ? 'text-lg sm:text-2xl' : 'text-base sm:text-xl'}`}>{frame.headline}</h3>
+          <p className="text-[10px] sm:text-xs text-white/80 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 line-clamp-1 font-light max-w-lg">
             {frame.desc}
           </p>
-          {/* <span className="text-xs text-white/80 font-light block mt-0.5">{frame.naturalist} • {frame.optics}</span> */}
         </div>
-        <div className={`w-10 h-10 rounded-full bg-white/20 backdrop-blur-md group-hover:bg-primary transition-colors flex items-center justify-center flex-none ml-4`}>
-          <span className="material-symbols-outlined text-[20px] text-white">fullscreen</span>
+        <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/20 backdrop-blur-md group-hover:bg-primary transition-colors flex items-center justify-center flex-none ml-2 sm:ml-4`}>
+          <span className="material-symbols-outlined text-[18px] sm:text-[20px] text-white">fullscreen</span>
         </div>
       </div>
     </div>
@@ -328,8 +327,8 @@ function GalleryGrid({
   }, [activeCategory, activeSanctuary]);
 
   return (
-    <section className="max-w-[1280px] mx-auto px-6 sm:px-8 pb-20" id="gallery-grid">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 auto-rows-[290px]">
+    <section className="max-w-[1280px] mx-auto px-4 sm:px-6 md:px-8 pb-10 sm:pb-20" id="gallery-grid">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 sm:gap-4 md:gap-6 auto-rows-[240px] sm:auto-rows-[290px]">
         {visibleFrames.map((frame, index) => (
           <GridCard key={frame.id} frame={frame} index={index} onOpen={() => onOpen(frame.id - 1)} />
         ))}
@@ -384,8 +383,8 @@ function Lightbox({
   const goTo = (index: number) => setCurrentIndex((index + GALLERY_FRAMES.length) % GALLERY_FRAMES.length);
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-3xl shadow-[inset_0_0_120px_rgba(0,0,0,0.95)] flex flex-col justify-between p-4 sm:p-6">
-      <div className="max-w-[1360px] w-full mx-auto flex items-center justify-between text-white pb-3 border-b border-white/10">
+    <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-3xl shadow-[inset_0_0_120px_rgba(0,0,0,0.95)] flex flex-col text-white">
+      <div className="max-w-[1360px] w-full mx-auto flex items-center justify-between pb-3 border-b border-white/10 px-4 sm:px-6 shrink-0">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-full bg-primary-fixed text-primary-dark font-serif font-bold text-sm flex items-center justify-center shadow-inner">
             HV
@@ -410,80 +409,82 @@ function Lightbox({
         </div>
       </div>
 
-      <div className="max-w-[1360px] w-full mx-auto flex-1 flex flex-col lg:flex-row items-center justify-center gap-6 my-4 overflow-hidden relative min-h-0">
-        <button
-          aria-label="Previous image"
-          className="absolute left-2 top-1/2 -translate-y-1/2 lg:translate-y-0 lg:static z-20 w-12 h-12 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center backdrop-blur-md transition-all border border-white/10 shadow-lg"
-          onClick={() => goTo(currentIndex - 1)}
-        >
-          <span className="material-symbols-outlined text-[28px]">chevron_left</span>
-        </button>
-
-        <div className="relative w-full lg:w-3/4 flex-1 lg:flex-none lg:h-full flex items-center justify-center rounded-2xl overflow-hidden bg-black/90 shadow-[inset_0_0_60px_rgba(0,0,0,0.9)] border border-white/10 p-2 min-h-0">
-          <Image
-            key={frame.id}
-            alt={frame.alt}
-            fill
-            sizes="(max-width: 1024px) 100vw, 75vw"
-            className="transition-all duration-300"
-            style={{ objectFit: 'contain' }}
-            src={frame.src}
-            priority
-          />
-        </div>
-
-        <div className="w-full lg:w-1/4 bg-neutral-900/95 border border-white/15 backdrop-blur-2xl rounded-2xl p-5 flex flex-col justify-between text-white gap-4 overflow-y-auto shrink-0 max-h-[42vh] lg:max-h-full shadow-2xl">
-          <div className="flex flex-col gap-2.5">
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] font-semibold text-primary-fixed uppercase tracking-wider">Field Naturalist Log</span>
-              <span className="text-[11px] px-2 py-0.5 rounded bg-white/10 text-white font-mono border border-white/10">14-BIT RAW</span>
-            </div>
-            <h4 className="font-serif text-xl font-semibold text-white leading-tight">{frame.headline}</h4>
-            <p className="text-xs text-white/90 leading-relaxed font-light">{frame.desc}</p>
-          </div>
-          <div className="bg-black/60 rounded-xl p-3.5 grid grid-cols-2 gap-3 text-xs border border-white/10 shadow-inner">
-            <div>
-              <span className="text-white/60 block text-[10px] uppercase tracking-wider font-medium">Location</span>
-              <span className="font-semibold text-primary-fixed">{frame.location}</span>
-            </div>
-            <div>
-              <span className="text-white/60 block text-[10px] uppercase tracking-wider font-medium">Expedition</span>
-              <span className="font-medium text-white line-clamp-1" title={frame.album}>{frame.album}</span>
-            </div>
-            <div>
-              <span className="text-white/60 block text-[10px] uppercase tracking-wider font-medium">Naturalist</span>
-              <span className="font-medium text-white">{frame.naturalist}</span>
-            </div>
-            <div>
-              <span className="text-white/60 block text-[10px] uppercase tracking-wider font-medium">Optics &amp; Profile</span>
-              <span className="font-mono text-primary-fixed text-[11px]">{frame.optics}</span>
-            </div>
-          </div>
-          <Link
-            className="w-full py-3 rounded-full bg-primary-fixed text-primary-dark text-xs font-bold uppercase tracking-wider text-center hover:bg-primary-fixed-dim transition-colors shadow-md"
-            href="/explore"
+      <div className="flex-1 overflow-y-auto lg:overflow-hidden min-h-0">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-center gap-4 sm:gap-6 p-4 sm:p-6 max-w-[1360px] mx-auto">
+          <button
+            aria-label="Previous image"
+            className="absolute left-2 top-1/2 -translate-y-1/2 lg:static lg:translate-y-0 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/60 hover:bg-black/90 text-white flex items-center justify-center backdrop-blur-md transition-all border border-white/10 shadow-lg"
+            onClick={() => goTo(currentIndex - 1)}
           >
-            Inquire About This Safari
-          </Link>
-        </div>
+            <span className="material-symbols-outlined text-[24px] sm:text-[28px]">chevron_left</span>
+          </button>
 
-        <button
-          aria-label="Next image"
-          className="absolute right-2 top-1/2 -translate-y-1/2 lg:translate-y-0 lg:static z-20 w-12 h-12 rounded-full bg-black/40 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-md transition-all"
-          onClick={() => goTo(currentIndex + 1)}
-        >
-          <span className="material-symbols-outlined text-[28px]">chevron_right</span>
-        </button>
+          <div className="relative w-full lg:w-3/4 flex-1 lg:flex-none lg:h-full flex items-center justify-center rounded-xl sm:rounded-2xl overflow-hidden bg-black/90 shadow-[inset_0_0_60px_rgba(0,0,0,0.9)] border border-white/10 p-1 sm:p-2 min-h-0">
+            <Image
+              key={frame.id}
+              alt={frame.alt}
+              fill
+              sizes="(max-width: 1024px) 100vw, 75vw"
+              className="transition-all duration-300"
+              style={{ objectFit: 'contain' }}
+              src={frame.src}
+              priority
+            />
+          </div>
+
+          <div className="w-full lg:w-1/4 bg-neutral-900/95 border border-white/15 backdrop-blur-2xl rounded-xl sm:rounded-2xl p-4 sm:p-5 flex flex-col gap-3 sm:gap-4 text-white shadow-2xl lg:max-h-[calc(100vh-180px)] lg:overflow-y-auto">
+            <div className="flex flex-col gap-2 sm:gap-2.5">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] sm:text-[11px] font-semibold text-primary-fixed uppercase tracking-wider">Field Naturalist Log</span>
+                <span className="text-[10px] sm:text-[11px] px-1.5 py-0.5 rounded bg-white/10 text-white font-mono border border-white/10">14-BIT RAW</span>
+              </div>
+              <h4 className="font-serif text-lg sm:text-xl font-semibold text-white leading-tight">{frame.headline}</h4>
+              <p className="text-[11px] sm:text-xs text-white/90 leading-relaxed font-light">{frame.desc}</p>
+            </div>
+            <div className="bg-black/60 rounded-lg sm:rounded-xl p-2.5 sm:p-3.5 grid grid-cols-2 gap-2 sm:gap-3 text-[11px] sm:text-xs border border-white/10 shadow-inner">
+              <div>
+                <span className="text-white/60 block text-[10px] uppercase tracking-wider font-medium">Location</span>
+                <span className="font-semibold text-primary-fixed">{frame.location}</span>
+              </div>
+              <div>
+                <span className="text-white/60 block text-[10px] uppercase tracking-wider font-medium">Expedition</span>
+                <span className="font-medium text-white line-clamp-1" title={frame.album}>{frame.album}</span>
+              </div>
+              <div>
+                <span className="text-white/60 block text-[10px] uppercase tracking-wider font-medium">Naturalist</span>
+                <span className="font-medium text-white">{frame.naturalist}</span>
+              </div>
+              <div>
+                <span className="text-white/60 block text-[10px] uppercase tracking-wider font-medium">Optics &amp; Profile</span>
+                <span className="font-mono text-primary-fixed text-[10px] sm:text-[11px]">{frame.optics}</span>
+              </div>
+            </div>
+            <Link
+              className="w-full py-2 sm:py-3 rounded-full bg-primary-fixed text-primary-dark text-[11px] sm:text-xs font-bold uppercase tracking-wider text-center hover:bg-primary-fixed-dim transition-colors shadow-md"
+              href="/explore"
+            >
+              Inquire About This Safari
+            </Link>
+          </div>
+
+          <button
+            aria-label="Next image"
+            className="absolute right-2 top-1/2 -translate-y-1/2 lg:static lg:translate-y-0 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/40 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-md transition-all"
+            onClick={() => goTo(currentIndex + 1)}
+          >
+            <span className="material-symbols-outlined text-[24px] sm:text-[28px]">chevron_right</span>
+          </button>
+        </div>
       </div>
 
       <div className="max-w-[1360px] w-full mx-auto pt-2 border-t border-white/10">
-        <div className="flex items-center justify-center gap-2 overflow-x-auto py-1 hide-scrollbar">
+        <div className="flex items-center justify-center gap-1.5 sm:gap-2 overflow-x-auto py-1 hide-scrollbar">
           {GALLERY_FRAMES.map((item, index) => (
             <button
               key={item.id}
-               className={`relative w-14 h-10 rounded-lg overflow-hidden flex-none border-2 transition-all duration-200 ${
-                 index === currentIndex ? 'border-primary-fixed scale-105 opacity-100' : 'border-transparent opacity-50 hover:opacity-90'
-               }`}
+               className={`relative w-10 h-8 sm:w-14 sm:h-10 rounded-md sm:rounded-lg overflow-hidden flex-none border-2 transition-all duration-200 ${
+                  index === currentIndex ? 'border-primary-fixed scale-105 opacity-100' : 'border-transparent opacity-50 hover:opacity-90'
+                }`}
               onClick={() => goTo(index)}
               aria-label={`View frame ${index + 1}`}
             >

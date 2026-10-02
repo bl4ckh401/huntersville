@@ -3,6 +3,13 @@ export function sanitizeTipTapHTML(html: string): string {
 
   let result = html;
 
+  // Unescape HTML entities in case content was double-escaped in storage.
+  result = result
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&amp;/g, '&')
+    .replace(/&nbsp;/g, ' ');
+
   // Remove data-start and data-end attributes (TipTap selection artifacts with
   // non-deterministic values that cause hydration mismatches).
   result = result.replace(/\s+(?:data-start|data-end)="[^"]*"/g, '');

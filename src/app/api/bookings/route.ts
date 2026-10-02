@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { createBooking } from '@/lib/content-store';
 
 const GUIDE_WHATSAPP = '254723388905';
 
@@ -37,6 +38,20 @@ export async function POST(request: Request) {
   const status = body.status || 'Pending';
   const userId = sessionUser?.userId || 'guest';
 
+  const booking = await createBooking({
+    travelerName,
+    travelerEmail,
+    travelerPhone,
+    experienceId,
+    date,
+    amount,
+    guestCount,
+    travelers,
+    paymentMethod,
+    status,
+    userId,
+  });
+
   const travelerDetails = travelers
     .map((t: { name?: string; age?: string; type?: string }, idx: number) => {
       const name = t.name?.trim() || 'Not provided';
@@ -46,9 +61,9 @@ export async function POST(request: Request) {
     })
     .join('\n');
 
-  const message = `New Booking Request\n\nGuest: ${travelerName}\nEmail: ${travelerEmail}\nPhone: ${travelerPhone}\nUser ID: ${userId}\nExperience ID: ${experienceId}\nDate: ${date}\nTotal Amount: ${amount}\nGuests: ${guestCount}\nPayment Method: ${paymentMethod}\nStatus: ${status}\n\nTraveler Details:\n${travelerDetails || 'No additional traveler details'}`;
+  const message = `New Booking Request\n\nGuest: ${travelerName}\nEmail: ${travelerEmail}\nPhone: ${travelerPhone}\nUser ID: ${userId}\nBooking ID: ${booking.id}\nExperience ID: ${experienceId}\nDate: ${date}\nTotal Amount: ${amount}\nGuests: ${guestCount}\nPayment Method: ${paymentMethod}\nStatus: ${status}\n\nTraveler Details:\n${travelerDetails || 'No additional traveler details'}`;
 
   const whatsappUrl = `https://wa.me/${GUIDE_WHATSAPP}?text=${encodeWhatsAppText(message)}`;
 
-  return NextResponse.json({ whatsappUrl, message });
+  return NextResponse.json({ whatsappUrl, message, bookingId: booking.id });
 }
